@@ -12,9 +12,9 @@
         List<string> burritoChoices = new List<string>();
 
         // variable to hold cost of customer order and tax rates
-        decimal cost = 0.00m;
-        decimal tax = 0.00m;
-        decimal taxRate = 0.08m;
+        double cost = 0.00;
+        double tax = 0.00;
+        double taxRate = 0.0825;
 
         ChooseTortilla(burritoChoices);
         ChooseProtein(burritoChoices, ref cost);
@@ -51,7 +51,7 @@
     }
 
     // prompts user to enter their Protein choice
-    static void ChooseProtein(List<string> burritoChoices, ref decimal cost)
+    static void ChooseProtein(List<string> burritoChoices, ref double cost)
     {
         Console.WriteLine("\nPROTEIN CHOICE: 1. STEAK $12.99 2. PORK $12.99 3. CHICKEN $9.99 4. CHORIZO $13.99");
         int proteinChoice = GetIntegerInput("Enter your protein choice: ", 1, 4);
@@ -59,26 +59,26 @@
         switch (proteinChoice)
         {
             case 1:
-                Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 12.99m}");
+                Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 12.99}");
                 burritoChoices.Add("Steak");
                 break;
             case 2:
-                Console.WriteLine($"You have chosen Pork. Your new total is: ${cost += 12.99m}");
+                Console.WriteLine($"You have chosen Pork. Your new total is: ${cost += 12.99}");
                 burritoChoices.Add("Pork");
                 break;
             case 3:
-                Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.99m}");
+                Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.99}");
                 burritoChoices.Add("Chicken");
                 break;
             case 4:
-                Console.WriteLine($"You have chosen Chorizo. Your new total is: ${cost += 13.99m}");
+                Console.WriteLine($"You have chosen Chorizo. Your new total is: ${cost += 13.99}");
                 burritoChoices.Add("Chorizo");
                 break;
         }
     }
 
     // prompts user if they would to double their Protein choice
-    static void AddExtraProtein(ref decimal cost)
+    static void AddExtraProtein(ref double cost)
     {
         while (true)
         {
@@ -86,7 +86,7 @@
             string response = Console.ReadLine().ToUpper();
             if (response == "Y")
             {
-                Console.WriteLine($"You have chosen double protein. Your new total is: ${cost += 1.99m}");
+                Console.WriteLine($"You have chosen double protein. Your new total is: ${cost += 1.99}");
                 break;
             }
             else if (response == "N")
@@ -244,7 +244,8 @@
             }
         }
     }
-    static decimal CalculateTax(ref decimal cost, ref decimal taxRate, ref decimal tax)
+    // calculates tax rate and adds it to final cost
+    static double CalculateTax(ref double cost, ref double taxRate, ref double tax)
     {
         tax = cost * taxRate;
         cost += tax;
