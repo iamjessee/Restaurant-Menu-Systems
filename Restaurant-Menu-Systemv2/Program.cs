@@ -30,7 +30,7 @@
     // prompts user to enter their tortilla choice
     static void ChooseTortilla(List<string> burritoChoices)
     {
-        Console.WriteLine("\nTORTILLA CHOICE: 1. FLOUR 2. CORN 3. SPICY CAYENNE ");
+        Console.WriteLine("\nTORTILLA CHOICE: 1. FLOUR 2. CORN 3. SPICY CAYENNE");
         int tortillaChoice = GetIntegerInput("Enter your tortilla choice: ", 1, 3);
 
         switch (tortillaChoice)
@@ -53,27 +53,28 @@
     // prompts user to enter their Protein choice
     static void ChooseProtein(List<string> burritoChoices, ref double cost)
     {
-        Console.WriteLine("\nPROTEIN CHOICE: 1. STEAK $12.99 2. PORK $12.99 3. CHICKEN $9.99 4. CHORIZO $13.99");
+        Console.WriteLine("\nPROTEIN CHOICE: 1. CHORIZO $13.99 2. STEAK $12.99 3. PORK $12.99 4. CHICKEN $9.99");
         int proteinChoice = GetIntegerInput("Enter your protein choice: ", 1, 4);
 
         switch (proteinChoice)
         {
             case 1:
-                Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 12.99}");
-                burritoChoices.Add("Steak");
-                break;
-            case 2:
-                Console.WriteLine($"You have chosen Pork. Your new total is: ${cost += 12.99}");
-                burritoChoices.Add("Pork");
-                break;
-            case 3:
-                Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.99}");
-                burritoChoices.Add("Chicken");
-                break;
-            case 4:
                 Console.WriteLine($"You have chosen Chorizo. Your new total is: ${cost += 13.99}");
                 burritoChoices.Add("Chorizo");
                 break;
+            case 2:
+                Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 12.99}");
+                burritoChoices.Add("Steak");
+                break;
+            case 3:
+                Console.WriteLine($"You have chosen Pork. Your new total is: ${cost += 12.99}");
+                burritoChoices.Add("Pork");
+                break;
+            case 4:
+                Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.99}");
+                burritoChoices.Add("Chicken");
+                break;
+            
         }
     }
 
