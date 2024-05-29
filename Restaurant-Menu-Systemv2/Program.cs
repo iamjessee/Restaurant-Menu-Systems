@@ -23,8 +23,10 @@
         ChooseBeans(burritoChoices);
         ChooseAddons(allAddonChoices);
 
+        
         Console.WriteLine($"Your order is complete: {GetOrderDescription(burritoChoices, allAddonChoices)}");
-        Console.WriteLine($"Your total is: ${CalculateTax(ref cost, ref taxRate, ref tax)} after tax");
+        Console.WriteLine($"Your total is: ${CalculateTax(ref cost, ref taxRate, ref tax)} after tax ");
+        Console.WriteLine($"You paid ${tax = Math.Round(tax, 2)} in taxes");
     }
 
     // prompts user to enter their tortilla choice
