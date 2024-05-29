@@ -11,8 +11,10 @@
         // list to store burrito choices
         List<string> burritoChoices = new List<string>();
 
-        // variable to hold cost of customer 
+        // variable to hold cost of customer order and tax rates
         decimal cost = 0.00m;
+        decimal tax = 0.00m;
+        decimal taxRate = 0.08m;
 
         ChooseTortilla(burritoChoices);
         ChooseProtein(burritoChoices, ref cost);
@@ -22,7 +24,7 @@
         ChooseAddons(allAddonChoices);
 
         Console.WriteLine($"Your order is complete: {GetOrderDescription(burritoChoices, allAddonChoices)}");
-        Console.WriteLine($"Your total is: ${cost}");
+        Console.WriteLine($"Your total is: ${CalculateTax(ref cost, ref taxRate, ref tax)} after tax");
     }
 
     // prompts user to enter their tortilla choice
@@ -101,8 +103,8 @@
     // prompts user to enter their Rice choice
     static void ChooseRice(List<string> burritoChoices)
     {
-        Console.WriteLine("\nRICE: 1. SPANISH RICE 2. CILANTRO LIME RICE 3. BROWN RICE");
-        int riceChoice = GetIntegerInput("Enter your rice choice: ", 1, 3);
+        Console.WriteLine("\nRICE: 1. SPANISH RICE 2. CILANTRO LIME RICE 3. BROWN RICE 4. NO RICE");
+        int riceChoice = GetIntegerInput("Enter your rice choice: ", 1, 4);
 
         switch (riceChoice)
         {
@@ -118,14 +120,18 @@
                 Console.WriteLine("You have chosen Brown Rice.");
                 burritoChoices.Add("Brown Rice");
                 break;
+            case 4:
+                Console.WriteLine("You have chosen No Rice.");
+                burritoChoices.Add("No Rice");
+                break;
         }
     }
 
     // prompts user to enter their Bean choice
     static void ChooseBeans(List<string> burritoChoices)
     {
-        Console.WriteLine("\nBEANS: 1. BLACK BEANS 2. PINTO BEANS 3. REFRIED BEANS");
-        int beanChoice = GetIntegerInput("Enter your bean choice: ", 1, 3);
+        Console.WriteLine("\nBEANS: 1. BLACK BEANS 2. PINTO BEANS 3. REFRIED BEANS 4. NO BEANS");
+        int beanChoice = GetIntegerInput("Enter your bean choice: ", 1, 4);
 
         switch (beanChoice)
         {
@@ -141,12 +147,16 @@
                 Console.WriteLine("You have chosen Refried Beans.");
                 burritoChoices.Add("Refried Beans");
                 break;
+            case 4:
+                Console.WriteLine("You have chosen No Beans.");
+                burritoChoices.Add("No Beans");
+                break;
         }
     }
     // prompts user to enter their add-on choices and lets them keep adding more if they choose
     static void ChooseAddons(List<string> allAddonChoices)
     {
-        bool addMoreAddons;
+        bool addMoreAddons = true;
         do
         {
             Console.WriteLine("\nADD-ONS: 1. GRILLED CORN SALSA 2. LETTUCE 3. ONIONS 4. SOUR CREAM 5. POTATOES 6. CHEESE");
@@ -175,12 +185,24 @@
             }
 
             Console.WriteLine("Would you like to pick another add-on? (Y/N)");
-            string userResponse = Console.ReadLine();
-            addMoreAddons = userResponse.ToUpper() == "Y";
+            string userResponse = Console.ReadLine().ToUpper();
+            if (userResponse == "Y")
+            {
+                addMoreAddons = true;
+            }
+            else if (userResponse == "N")
+            {
+                addMoreAddons = false;
+            }
+            else
+            {
+                Console.WriteLine("Please enter Y/N to continue.");
+            }
+            
 
         } while (addMoreAddons);
     }
-    // prevents user from entering the same add-on choice more than once
+    //puts user add-on choice into list and prevents user from entering the same add-on choice more than once
     static void AddAddon(string addon, List<string> allAddonChoices)
     {
         if (!allAddonChoices.Contains(addon))
@@ -221,5 +243,13 @@
                 return input;
             }
         }
+    }
+    static decimal CalculateTax(ref decimal cost, ref decimal taxRate, ref decimal tax)
+    {
+        tax = cost * taxRate;
+        cost += tax;
+        cost = Math.Round(cost, 2);
+
+        return cost;
     }
 }
