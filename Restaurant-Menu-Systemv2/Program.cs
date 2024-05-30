@@ -24,9 +24,10 @@
         ChooseAddons(allAddonChoices);
 
         
-        Console.WriteLine($"Your order is complete: {GetOrderDescription(burritoChoices, allAddonChoices)}");
-        Console.WriteLine($"Your total is: ${CalculateTax(ref cost, ref taxRate, ref tax)} after tax ");
-        Console.WriteLine($"You paid ${tax = Math.Round(tax, 2)} in taxes");
+        Console.WriteLine($"YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
+        Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${CalculateTotalTax(ref cost, taxRate, ref tax)}");
+        Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
+
     }
 
     // prompts user to enter their tortilla choice
@@ -221,9 +222,9 @@
     // displays users order and cost total
     static string GetOrderDescription(List<string> burritoChoices, List<string> allAddonChoices)
     {
-        string burrito = string.Join(", ", burritoChoices);
-        string addons = string.Join(", ", allAddonChoices);
-        return $"You have chosen a {burrito} with the add-on choices of: {addons}.";
+        string burrito = string.Join("\n", burritoChoices);
+        string addons = string.Join("\n", allAddonChoices);
+        return $"You have chosen:\n{burrito}\n{addons}";
     }
 
     // verifies the users input is valid for their choices
@@ -248,12 +249,12 @@
         }
     }
     // calculates tax rate and adds it to final cost
-    static double CalculateTax(ref double cost, ref double taxRate, ref double tax)
+    static string CalculateTotalTax(ref double cost, double taxRate, ref double tax)
     {
         tax = cost * taxRate;
         cost += tax;
-        cost = Math.Round(cost, 2);
+        string formatedCost = cost.ToString("0.00");
 
-        return cost;
+        return formatedCost;
     }
 }
