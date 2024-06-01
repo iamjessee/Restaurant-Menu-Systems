@@ -2,9 +2,25 @@
 {
     static void Main(string[] args)
     {
-        // customer greeting message
+        // customer greeting message for user gets the customers name to personalize the order 
         Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
-        Console.WriteLine("Please use the numbers provided when making a selection.");
+        Console.WriteLine("Please enter a name for this order: ");
+        int wrongInput = 0;
+        string customerName = Console.ReadLine();
+        // checks if user entered only numbers into the name field, side note, I googled how to ONLY to characters and I saw some crazy thing (Regex regex = new Regex("^[a-zA-Z]+$");) and did not want to just paste it in without asking questions 
+        while (true)
+        {
+            if (!int.TryParse(customerName, out wrongInput))
+            {
+                Console.WriteLine($"Welcome {customerName} Please use the numbers provided when making a selection.");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Please enter a name using alphabetic characters only.");
+                customerName = Console.ReadLine();
+            }
+        }
 
         //list to store add-on choices
         List<string> allAddonChoices = new List<string>();
@@ -16,6 +32,7 @@
         double tax = 0.00;
         double taxRate = 0.0825;
 
+        // calling of our methods to process order for customer
         ChooseTortilla(burritoChoices);
         ChooseProtein(burritoChoices, ref cost);
         AddExtraProtein(ref cost);
@@ -23,8 +40,7 @@
         ChooseBeans(burritoChoices);
         ChooseAddons(allAddonChoices);
 
-        
-        Console.WriteLine($"YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
+        Console.WriteLine($"THANKS {customerName}, YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
         Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${CalculateTotalTax(ref cost, taxRate, ref tax)}");
         Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
 
