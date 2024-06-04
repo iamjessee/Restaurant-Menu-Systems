@@ -2,25 +2,9 @@
 {
     static void Main(string[] args)
     {
-        // customer greeting message for user gets the customers name to personalize the order 
-        Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
-        Console.WriteLine("Please enter a name for this order: ");
+        // variables to hold customer name and check input
+        string customerName = "";
         int wrongInput = 0;
-        string customerName = Console.ReadLine();
-        // checks if user entered only numbers into the name field, side note, I googled how to ONLY to characters and I saw some crazy thing (Regex regex = new Regex("^[a-zA-Z]+$");) and did not want to just paste it in without asking questions 
-        while (true)
-        {
-            if (!int.TryParse(customerName, out wrongInput))
-            {
-                Console.WriteLine($"Welcome {customerName} Please use the numbers provided when making a selection.");
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Please enter a name using alphabetic characters only.");
-                customerName = Console.ReadLine();
-            }
-        }
 
         //list to store add-on choices
         List<string> allAddonChoices = new List<string>();
@@ -31,19 +15,43 @@
         double cost = 0.00;
         double tax = 0.00;
         double taxRate = 0.0825;
+        double total = 0.00;
 
         // calling of our methods to process order for customer
+        GetCustomerNameForOrder(ref customerName, wrongInput);
         ChooseTortilla(burritoChoices);
         ChooseProtein(burritoChoices, ref cost);
-        AddExtraProtein(ref cost);
+        AddExtraProtein(ref cost, burritoChoices);
         ChooseRice(burritoChoices);
         ChooseBeans(burritoChoices);
         ChooseAddons(allAddonChoices);
+        tax = GetTaxAmount(cost, taxRate);
+        total = GetTaxAmount(cost, taxRate) + cost;
+        GetReceiptDisplay(customerName, burritoChoices, allAddonChoices, cost, tax, total);
+    }
 
-        Console.WriteLine($"THANKS {customerName}, YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
-        Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${CalculateTotalTax(ref cost, taxRate, ref tax)}");
-        Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
+    // Prompts user to enter a name for their order and makes sure it does not only contain numbers
+    static string GetCustomerNameForOrder(ref string customerName, int wrongInput)
+    {
+        Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
+        Console.WriteLine("Please enter a name for this order: ");
 
+        customerName = Console.ReadLine();
+
+        while (true)
+        {
+            if (!int.TryParse(customerName, out wrongInput))
+            {
+                Console.WriteLine($"Welcome {customerName} Please use the numbers provided when making a selection.");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Please enter a name using alphabetic characters.");
+                customerName = Console.ReadLine();
+            }
+        }
+        return customerName;
     }
 
     // prompts user to enter their tortilla choice
@@ -72,33 +80,34 @@
     // prompts user to enter their Protein choice
     static void ChooseProtein(List<string> burritoChoices, ref double cost)
     {
-        Console.WriteLine("\nPROTEIN CHOICE: 1. CHORIZO $13.99 2. STEAK $12.99 3. PORK $12.99 4. CHICKEN $9.99");
+        Console.WriteLine("\nPROTEIN CHOICE: 1. STEAK $11.10 2. PORK $10.00 3. CHORIZO $9.85 4. CHICKEN $9.35");
         int proteinChoice = GetIntegerInput("Enter your protein choice: ", 1, 4);
 
         switch (proteinChoice)
         {
+            
             case 1:
-                Console.WriteLine($"You have chosen Chorizo. Your new total is: ${cost += 13.99}");
-                burritoChoices.Add("Chorizo");
+                Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 11.10}");
+                burritoChoices.Add("Steak  $11.10");
                 break;
             case 2:
-                Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 12.99}");
-                burritoChoices.Add("Steak");
+                Console.WriteLine($"You have chosen Pork. Your new total is: ${cost += 10.00}");
+                burritoChoices.Add("Pork $10.00");
                 break;
             case 3:
-                Console.WriteLine($"You have chosen Pork. Your new total is: ${cost += 12.99}");
-                burritoChoices.Add("Pork");
+                Console.WriteLine($"You have chosen Chorizo. Your new total is: ${cost += 9.85}");
+                burritoChoices.Add("Chorizo $9.85");
                 break;
             case 4:
-                Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.99}");
-                burritoChoices.Add("Chicken");
+                Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.35}");
+                burritoChoices.Add("Chicken $9.35");
                 break;
             
         }
     }
 
     // prompts user if they would to double their Protein choice
-    static void AddExtraProtein(ref double cost)
+    static void AddExtraProtein(ref double cost, List<string> burritoChoices)
     {
         while (true)
         {
@@ -107,6 +116,9 @@
             if (response == "Y")
             {
                 Console.WriteLine($"You have chosen double protein. Your new total is: ${cost += 1.99}");
+
+                // adds text to the users protein choice to show them they opted for double protein
+                burritoChoices.Add("Double Protein $1.99");
                 break;
             }
             else if (response == "N")
@@ -222,6 +234,7 @@
 
         } while (addMoreAddons);
     }
+
     //puts user add-on choice into list and prevents user from entering the same add-on choice more than once
     static void AddAddon(string addon, List<string> allAddonChoices)
     {
@@ -234,13 +247,18 @@
             Console.WriteLine("You cannot add the same option twice. Please pick another option.");
         }
     }
+    //static void EditOrderChoices()
+    //{
+    //    Console.Write("Would you like to edit your order before completing?");
+    //    string userResponce = Console.ReadLine();
+    //}
 
     // displays users order and cost total
     static string GetOrderDescription(List<string> burritoChoices, List<string> allAddonChoices)
     {
         string burrito = string.Join("\n", burritoChoices);
         string addons = string.Join("\n", allAddonChoices);
-        return $"You have chosen:\n{burrito}\n{addons}";
+        return $"\n{burrito}\n{addons}";
     }
 
     // verifies the users input is valid for their choices
@@ -264,13 +282,17 @@
             }
         }
     }
-    // calculates tax rate and adds it to final cost
-    static string CalculateTotalTax(ref double cost, double taxRate, ref double tax)
+    static double GetTaxAmount(double subTotal, double taxRate)
     {
-        tax = cost * taxRate;
-        cost += tax;
-        string formatedCost = cost.ToString("0.00");
+        return subTotal * taxRate;
+    }
 
-        return formatedCost;
+    // takes all order details customer has chosen and displays them in a receipt format that is readable for customer
+    static void GetReceiptDisplay(string customerName, List<string> burritoChoices, List<string> allAddonChoices, double cost, double tax, double total)
+    {
+        Console.WriteLine($"THANKS {customerName}, YOUR ORDER IS COMPLETE \n{GetOrderDescription(burritoChoices, allAddonChoices)}");
+        Console.WriteLine($"\nSUBTOTAL: ${cost.ToString("0.00")}");
+        Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
+        Console.WriteLine($"TOTAL: ${total.ToString("0.00")}");
     }
 }
