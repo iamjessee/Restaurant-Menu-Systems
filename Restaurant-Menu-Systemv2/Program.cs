@@ -41,7 +41,7 @@
         ChooseAddons(allAddonChoices);
 
         Console.WriteLine($"THANKS {customerName}, YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
-        Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${CalculateTotalTax(ref cost, taxRate, ref tax)}");
+        Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${GetTaxAmount(ref cost, taxRate, ref tax)}");
         Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
 
     }
@@ -265,7 +265,7 @@
         }
     }
     // calculates tax rate and adds it to final cost
-    static string CalculateTotalTax(ref double cost, double taxRate, ref double tax)
+    static string GetTaxAmount(ref double cost, double taxRate, ref double tax)
     {
         tax = cost * taxRate;
         cost += tax;
