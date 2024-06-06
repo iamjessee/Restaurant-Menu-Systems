@@ -102,7 +102,6 @@
                 Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.35}");
                 burritoChoices.Add("Chicken $9.35");
                 break;
-
         }
     }
 
