@@ -36,9 +36,7 @@
         Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
         Console.WriteLine("Please enter a name for this order: ");
 
-        Console.WriteLine($"THANKS {customerName}, YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
-        Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${CalculateTotalTax(ref cost, taxRate, ref tax)}");
-        Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
+        customerName = Console.ReadLine();
 
         while (true)
         {
@@ -87,7 +85,7 @@
 
         switch (proteinChoice)
         {
-            
+
             case 1:
                 Console.WriteLine($"You have chosen Steak. Your new total is: ${cost += 11.10}");
                 burritoChoices.Add("Steak  $11.10");
@@ -104,7 +102,7 @@
                 Console.WriteLine($"You have chosen Chicken. Your new total is: ${cost += 9.35}");
                 burritoChoices.Add("Chicken $9.35");
                 break;
-            
+
         }
     }
 
@@ -232,7 +230,7 @@
             {
                 Console.WriteLine("Please enter Y/N to continue.");
             }
-            
+
 
         } while (addMoreAddons);
     }
@@ -249,13 +247,6 @@
             Console.WriteLine("You cannot add the same option twice. Please pick another option.");
         }
     }
-    //static void EditOrderChoices()
-    //{
-    //    Console.Write("Would you like to edit your order before completing?");
-    //    string userResponce = Console.ReadLine();
-    //}
-
-    // displays users order and cost total
     static string GetOrderDescription(List<string> burritoChoices, List<string> allAddonChoices)
     {
         string burrito = string.Join("\n", burritoChoices);
@@ -284,8 +275,7 @@
             }
         }
     }
-    // calculates tax rate and adds it to final cost
-    static string CalculateTotalTax(ref double cost, double taxRate, ref double tax)
+    static double GetTaxAmount(double subTotal, double taxRate)
     {
         return subTotal * taxRate;
     }
