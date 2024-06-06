@@ -36,7 +36,9 @@
         Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
         Console.WriteLine("Please enter a name for this order: ");
 
-        customerName = Console.ReadLine();
+        Console.WriteLine($"THANKS {customerName}, YOUR ORDER IS COMPLETE {GetOrderDescription(burritoChoices, allAddonChoices)}");
+        Console.WriteLine($"\nSUBTOTAL: ${cost}\nTOTAL: ${CalculateTotalTax(ref cost, taxRate, ref tax)}");
+        Console.WriteLine($"TAX: ${tax.ToString("0.00")}");
 
         while (true)
         {
@@ -282,7 +284,8 @@
             }
         }
     }
-    static double GetTaxAmount(double subTotal, double taxRate)
+    // calculates tax rate and adds it to final cost
+    static string CalculateTotalTax(ref double cost, double taxRate, ref double tax)
     {
         return subTotal * taxRate;
     }
