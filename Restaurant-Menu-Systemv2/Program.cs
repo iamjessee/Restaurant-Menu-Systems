@@ -23,4 +23,4 @@ class Program
         CustomerReceipt receipt = new CustomerReceipt(orderchoice);
         receipt.GetReceiptDisplay(ordername);
     }
-}
+} 

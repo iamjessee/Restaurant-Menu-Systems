@@ -43,7 +43,7 @@ namespace Restaurant_Menu_System_V3
 
             int tortillaChoice = GetIntegerInput("Enter your tortilla choice: ", 1, 3) - 1;
 
-            string[] tortillaChoiceOptions = { "Flour Tortilla", "Corn Tortilla", "Spicy Cayenne Tortilla" };
+            string[] tortillaChoiceOptions = { "FLOUR TORTILLA", "CORN TORTILLA", "SPICY CAYENNE TORTILLA" };
 
             // shows user what they selected
             Console.WriteLine($"You selected: {tortillaChoiceOptions[tortillaChoice]}.");
@@ -88,7 +88,7 @@ namespace Restaurant_Menu_System_V3
                 {
                     Cost += tortillaChoicePrices[tortillaChoice] * 0.40m;
                     Console.WriteLine($"You have chosen double protein. Your new total is: ${Math.Round(Cost, 2)}");
-                    burritoChoices[1] += " x2";
+                    burritoChoices[1] += " x2 PROTEIN";
                     addOnProtein = true;
                 }
                 else if (userResponse == "N")
@@ -162,16 +162,18 @@ namespace Restaurant_Menu_System_V3
             "3. ONIONS",
             "4. SOUR CREAM",
             "5. POTATOES",
-            "6. CHEESE"};
+            "6. CHEESE",
+            "7. QUESO....$1.60",
+            "8. GUACAMOLE....$2.65"};
 
             while (keepAddingAddOns)
             {
                 Console.WriteLine(string.Join(Environment.NewLine, lines));
 
-                int addonChoice = GetIntegerInput("Enter your add-on choice: ", 1, 6) - 1;
+                int addonChoice = GetIntegerInput("Enter your add-on choice: ", 1, 8) - 1;
 
-                string[] addonChoiceOptions = { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE" };
-
+                string[] addonChoiceOptions = { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" };
+                decimal[] addonChoicePrices = { 0.00m, 0.00m, 0.00m, 0.00m, 0.00m, 0.00m, 1.60m, 2.65m };
                 if (addonChoices.Contains(addonChoiceOptions[addonChoice]))
                 {
                     Console.WriteLine($"You have already selected {addonChoiceOptions[addonChoice]}. Please choose a different add-on.");
@@ -179,18 +181,20 @@ namespace Restaurant_Menu_System_V3
                 else
                 {
                     // adds add-on choice to list to display as receipt later
-                    addonChoices.Add(addonChoiceOptions[addonChoice]);
+                    addonChoices.Add($"{addonChoiceOptions[addonChoice]}");
+                    Cost += addonChoicePrices[addonChoice];
 
                     // Show the user what they selected
                     Console.WriteLine($"You selected: {addonChoiceOptions[addonChoice]}.");
                 }
+
                 keepAddingAddOns = CheckAddonList();
             }
         }
 
+        // prompts user for if they would like to add more add-ons to their order
         public bool CheckAddonList()
-        {
-            // Ask if the user would like to pick another add-on
+        { 
             Console.WriteLine("Would you like to pick another add-on? (Y/N)");
             string userResponse = Console.ReadLine().ToUpper();
 
@@ -199,6 +203,7 @@ namespace Restaurant_Menu_System_V3
                 Console.WriteLine("Please enter Y or N to continue.");
                 userResponse = Console.ReadLine().ToUpper();
             }
+
             return userResponse == "Y";
         }
     }
