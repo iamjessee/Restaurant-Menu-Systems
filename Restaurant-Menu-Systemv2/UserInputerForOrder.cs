@@ -1,13 +1,35 @@
 ﻿using System.ComponentModel.Design;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Restaurant_Menu_System_V3
 {
     public class OrderInputAndOptions
     {
-        public decimal Cost { get; set; }
-        public List<string> burritoChoices = new List<string>();
-        public List<string> addonChoices = new List<string>();
+        private decimal cost { get; set; }
+        private List<string> burritoChoices = new List<string>();
+        private List<string> addonChoices = new List<string>();
+
+        // Property to get and set the cost
+        public decimal Cost
+        {
+            get { return cost; }
+            set { cost = value; }
+        }
+
+        // Property to get and set the burritoChoices
+        public List<string> BurritoChoices
+        {
+            get { return burritoChoices; }
+            private set { burritoChoices = value; }
+        }
+
+        // Property to get and set the addonChoices
+        public List<string> AddonChoices
+        {
+            get { return addonChoices; }
+            private set { addonChoices = value; }
+        }
 
         // collects user input and verifies it is valid and fits within the choice parameters provided
         public int GetIntegerInput(string message, int minValue, int maxValue)

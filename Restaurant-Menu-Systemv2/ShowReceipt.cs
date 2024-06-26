@@ -22,8 +22,8 @@ namespace Restaurant_Menu_System_V3
         // gets complete order selected by user and displays it in a readable itemized formate for user
         public string GetOrderDescrption()
         {
-            string burrito = string.Join("\n", ordereditems.burritoChoices);
-            string addons = string.Join("\n", ordereditems.addonChoices);
+            string burrito = string.Join("\n", ordereditems.BurritoChoices);
+            string addons = string.Join("\n", ordereditems.AddonChoices);
 
             return $"\n{burrito}\n{addons}";
         }

@@ -19,7 +19,9 @@ class Program
         // prompt user to edit their order if needed
 
 
-        // display user receipt
+        // clears console and displays user receipt
+        //Console.Clear();
+        //Console.WriteLine("\x1b[3J");
         CustomerReceipt receipt = new CustomerReceipt(orderchoice);
         receipt.GetReceiptDisplay(ordername);
     }
