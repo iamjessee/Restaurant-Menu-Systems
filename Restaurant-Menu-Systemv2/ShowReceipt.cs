@@ -13,13 +13,13 @@ namespace Restaurant_Menu_System_V3
         // calling field from another class to get items selected by user
         private OrderInputAndOptions ordereditems;
 
-        // Constructor to initialize the orderedItems instance
+        // Constructor to initialize the ordereditems instance
         public CustomerReceipt(OrderInputAndOptions orderchoice)
         {
             this.ordereditems = orderchoice;
         }
 
-        // gets complete order selected by user and displays it in a readable itemized formate for user
+        // gets complete order selected by user and displays it in a readable itemized format for user
         public string GetOrderDescrption()
         {
             string burrito = string.Join("\n", ordereditems.BurritoChoices);

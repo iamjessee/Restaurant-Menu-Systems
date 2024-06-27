@@ -43,5 +43,4 @@ namespace Restaurant_Menu_System_V3
             return Regex.IsMatch(name, @"^[a-zA-Z\s]{1,26}$");
         }
     }
-
 }
