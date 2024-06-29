@@ -24,7 +24,6 @@ namespace Restaurant_Menu_System_V3
         {
             string burrito = string.Join("\n", ordereditems.BurritoChoices);
             string addons = string.Join("\n", ordereditems.AddonChoices);
-
             return $"\n{burrito}\n{addons}";
         }
 
@@ -32,7 +31,6 @@ namespace Restaurant_Menu_System_V3
         public decimal GetAmount()
         {
             decimal taxRate = 0.085m;
-
             return Math.Round(ordereditems.Cost * taxRate, 2);
         }
  

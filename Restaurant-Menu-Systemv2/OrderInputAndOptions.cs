@@ -53,6 +53,21 @@ namespace Restaurant_Menu_System_V3
                 }
             }
         }
+        public void DisplayOrderOptions(string[] orderOptions, decimal[] orderPrices)
+        {
+            for (int i = 0; i < orderOptions.Length; i++)
+            {
+                if (orderPrices[i] == 0.00m)
+                {
+                    Console.WriteLine($"{i + 1}. {orderOptions[i].ToUpper()}");
+                }
+                else
+                {
+                    Console.WriteLine($"{i + 1}. {orderOptions[i].ToUpper()}....${orderPrices[i]}");
+                }
+            }
+        }
+
         // prompts user to enter their tortilla choice
         public void ChooseTortilla()
         {
@@ -76,9 +91,6 @@ namespace Restaurant_Menu_System_V3
             string[] tortillaChoiceOptions = { "STEAK", "PORK", "CHORIZO", "CHICKEN" };
             decimal[] tortillaChoicePrices = { 11.10m, 10.00m, 9.85m, 9.35m };
             DisplayOrderOptions(tortillaChoiceOptions, tortillaChoicePrices);
-
-            //Console.WriteLine(string.Join(Environment.NewLine, lines));
-
             int tortillaChoice = GetIntegerInput("Enter your protein choice: ", 1, 4) - 1;
 
             // adds tortilla choice to list to display as receipt later
@@ -135,9 +147,9 @@ namespace Restaurant_Menu_System_V3
         // prompts user to enter their bean choice
         public void ChooseBeans()
         {
+            Console.WriteLine("\nBEAN CHOICE:");
             string[] tortillaChoiceOptions = { "BLACK BEANS", "PINTO BEANS", "REFRIED BEANS", "NO BEANS" };
             decimal[] tortillaChoicePrices = { 0.00m, 0.00m, 0.00m, 0.00m, };
-            Console.WriteLine("\nBEAN CHOICE:");
             DisplayOrderOptions(tortillaChoiceOptions, tortillaChoicePrices);
             int tortillaChoice = GetIntegerInput("Enter your bean choice: ", 1, 4) - 1;
 
@@ -190,20 +202,6 @@ namespace Restaurant_Menu_System_V3
                 userResponse = Console.ReadLine().ToUpper();
             }
             return userResponse == "Y";
-        }
-        public void DisplayOrderOptions(string[] orderOptions, decimal[] orderPrices)
-        {
-            for (int i = 0; i < orderOptions.Length; i++)
-            {
-                if (orderPrices[i] == 0.00m)
-                {
-                    Console.WriteLine($"{i + 1}. {orderOptions[i].ToUpper()}");
-                }
-                else
-                {
-                    Console.WriteLine($"{i + 1}. {orderOptions[i].ToUpper()}....${orderPrices[i]}");
-                }
-            }
         }
     }
 }
