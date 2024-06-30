@@ -20,12 +20,12 @@ class Program
 
         // prompt user to edit their order if needed
         EditOrderItem editOrderItem = new EditOrderItem(orderchoice);
-        editOrderItem.PrompUserToEditOrder();
-        editOrderItem.ShowOrderOptionsToEdit();
+        if (editOrderItem.PromptUserToEditOrder())
+        {
+            editOrderItem.ShowOrderOptionsToEdit();
+        }
 
-        // clears console and displays user receipt
-        //Console.Clear();
-        //Console.WriteLine("\x1b[3J");
+        // displays user receipt
         CustomerReceipt receipt = new CustomerReceipt(orderchoice);
         receipt.GetReceiptDisplay(ordername);
     }
