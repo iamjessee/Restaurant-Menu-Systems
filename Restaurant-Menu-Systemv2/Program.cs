@@ -1,4 +1,6 @@
 ﻿using Restaurant_Menu_System_V3;
+using Restaurant_Menu_Systemv3;
+using System.ComponentModel.DataAnnotations;
 
 class Program
 {
@@ -17,7 +19,9 @@ class Program
         orderchoice.ChooseAddOns();
 
         // prompt user to edit their order if needed
-
+        EditOrderItem editOrderItem = new EditOrderItem(orderchoice);
+        editOrderItem.PrompUserToEditOrder();
+        editOrderItem.ShowOrderOptionsToEdit();
 
         // clears console and displays user receipt
         //Console.Clear();
