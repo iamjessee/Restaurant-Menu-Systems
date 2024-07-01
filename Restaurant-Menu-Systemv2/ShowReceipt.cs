@@ -50,7 +50,7 @@ namespace Restaurant_Menu_System_V3
         // displays full receipt to user
         public void GetReceiptDisplay(OrderName ordername)
         {
-            Console.WriteLine($"\nThanks {ordername.Name}, your order is complete. \nOrder ID: {GetOrderID()}\n{GetOrderDescrption()}");
+            Console.WriteLine($"\nThanks {ordername.Name}, your order is complete. \n\nOrder ID: {GetOrderID()}\n{GetOrderDescrption()}");
             Console.WriteLine($"\nSUBTOTAL: ${Math.Round(orderChoice.Cost, 2)}");
             Console.WriteLine($"TAX: ${GetAmount()}");
             Console.WriteLine($"TOTAL: ${GetTotal()}");

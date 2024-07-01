@@ -20,10 +20,7 @@ class Program
 
         // prompt user to edit their order if needed
         EditOrderItem editOrderItem = new EditOrderItem(orderchoice);
-        if (editOrderItem.PromptUserToEditOrder())
-        {
-            editOrderItem.ShowOrderOptionsToEdit();
-        }
+        editOrderItem.ShowOrderOptionsToEdit();
 
         // displays user receipt
         CustomerReceipt receipt = new CustomerReceipt(orderchoice);

@@ -16,35 +16,23 @@ namespace Restaurant_Menu_Systemv3
         {
             this.orderChoice = orderchoice;
         }
-
-        // prompts user to ask if they would like to edit their order
-        public bool PromptUserToEditOrder()
+        public void ClearChoices()
         {
-            do
-            {
-                Console.WriteLine("Would you like to edit your order? (Y/N)");
-                string userResponse = Console.ReadLine().ToUpper();
-
-                if (userResponse == "Y")
-                {
-                    return true;
-                }
-                else if (userResponse == "N")
-                {
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("Please enter Y/N to continue.");
-                    userResponse = Console.ReadLine().ToUpper();
-                }
-            } while(true);
-      }
+            orderChoice.BurritoChoices.Clear();
+            orderChoice.AddonChoices.Clear();
+            orderChoice.Cost = 0;
+        }
+        // prompts user to ask if they would like to edit their order
         // displays options for user to edit and takes them back to their spot in the menu
         public void ShowOrderOptionsToEdit()
         {
-            Action[] orderOptions = { orderChoice.ChooseTortilla, orderChoice.ChooseProtein, orderChoice.ChooseRice, orderChoice.ChooseBeans, orderChoice.ChooseAddOns };
+            if (!orderChoice.AskYesNoQuestion("Would you like to edit your order?"))
+            {
+                Console.WriteLine("No changes made to the order.");
+                return;
+            }
 
+            Action[] orderOptions = { orderChoice.ChooseTortilla, orderChoice.ChooseProtein, orderChoice.ChooseRice, orderChoice.ChooseBeans, orderChoice.ChooseAddOns };
             string[] orderOptionNames = { "Edit Tortilla Choice","Edit Protein Choice","Edit Rice Choice","Edit Bean Choice","Edit Add-On Choices" };
 
             while (true)
@@ -57,15 +45,22 @@ namespace Restaurant_Menu_Systemv3
 
                 int choice = orderChoice.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
 
+                // need to find a way to clear items from list that user is editing to add in the newly selected items
+                //if (choice == 0)
+                //{
+                //    orderChoice.BurritoChoices.Clear();
+                //}
+                //else if (choice == 4)
+                //{
+                //    orderChoice.AddonChoices.Clear();
+                //}
+                //else
+                //{
+                //    orderChoice.BurritoChoices.RemoveAt(choice);
+                //}
                 orderOptions[choice]();
 
-                //need to find a way to clear list of previous choices and cost based on edit choice by user
-                //if (ordereditems.BurritoChoices.Contains(choice))
-
-                Console.WriteLine("Would you like to make another edit?");
-                string userResponse = Console.ReadLine().ToUpper();
-
-                if (userResponse != "Y") 
+                if (!orderChoice.AskYesNoQuestion("Would you like to make another edit?"))
                 {
                     break;
                 }

@@ -71,6 +71,28 @@ namespace Restaurant_Menu_System_V3
             }
         }
 
+        public bool AskYesNoQuestion(string question)
+        {
+            do
+            {
+                Console.WriteLine($"{question}(Y/N)");
+                string userResponse = Console.ReadLine().ToUpper();
+
+                if (userResponse == "Y")
+                {
+                    return true;
+                }
+                else if (userResponse == "N")
+                {
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter Y/N to continue.");
+                }
+            } while (true);
+        }
+
         // prompts user to enter their tortilla choice
         public void ChooseTortilla()
         {
@@ -101,29 +123,20 @@ namespace Restaurant_Menu_System_V3
             // shows user what they selected and total cost of selection
             Console.WriteLine($"You selected: {tortillaChoiceOptions[tortillaChoice]}, Your new total is ${Cost}");
 
-            // checks if user would like to double their protein and adds cost to their total
-            Console.WriteLine($"Would you like to pick double your protein for ${Math.Round(Cost * 0.40m, 2)} ? (Y/N)");
-            string userResponse = Console.ReadLine().ToUpper();
-
             bool addOnProtein = false;
 
             do
             {
-                if (userResponse == "Y")
+                if (AskYesNoQuestion($"Would you like to pick double your protein for ${Math.Round(Cost * 0.40m, 2)}?"))
                 {
                     Cost += tortillaChoicePrices[tortillaChoice] * 0.40m;
                     Console.WriteLine($"You have chosen double protein. Your new total is: ${Math.Round(Cost, 2)}");
                     burritoChoices[1] += " x2 PROTEIN";
                     addOnProtein = true;
                 }
-                else if (userResponse == "N")
-                {
-                    addOnProtein = true;
-                }
                 else
                 {
-                    Console.WriteLine("Please enter Y/N to continue.");
-                    userResponse = Console.ReadLine().ToUpper();
+                    addOnProtein = true;
                 }
             }
             while (!addOnProtein);
@@ -184,22 +197,8 @@ namespace Restaurant_Menu_System_V3
                     // Show the user what they selected
                     Console.WriteLine($"You selected: {addonChoiceOptions[addonChoice]}.");
                 }
-                keepAddingAddOns = CheckAddonList();
+                keepAddingAddOns = AskYesNoQuestion("Would you like to pick another add-on?");
             }
-        }
-
-        // prompts user for if they would like to add more add-ons to their order
-        public bool CheckAddonList()
-        { 
-            Console.WriteLine("Would you like to pick another add-on? (Y/N)");
-            string userResponse = Console.ReadLine().ToUpper();
-
-            while (userResponse != "Y" && userResponse != "N")
-            {
-                Console.WriteLine("Please enter Y or N to continue.");
-                userResponse = Console.ReadLine().ToUpper();
-            }
-            return userResponse == "Y";
         }
     }
 }
