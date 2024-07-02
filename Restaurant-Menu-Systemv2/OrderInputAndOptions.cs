@@ -4,35 +4,35 @@ using System.Xml.Linq;
 
 namespace Restaurant_Menu_System_V3
 {
-    // find a way to display selections to use via the already existing arrays
+    // Manages order input and options selection
     public class OrderInputAndOptions
     {
-        private decimal cost { get; set; }
-        private List<string> burritoChoices = new List<string>();
-        private List<string> addonChoices = new List<string>();
+        private List<decimal> _cost = new List<decimal>();
+        private List<MenuOption> _burritoChoices = new List<MenuOption>();
+        private List<MenuOption> _addonChoices = new List<MenuOption>();
 
         // Property to get and set the cost
-        public decimal Cost
+        public List<decimal> Cost
         {
-            get { return cost; }
-            set { cost = value; }
+            get { return _cost; }
+            set { _cost = value; }
         }
 
-        // Property to get and set the burritoChoices
-        public List<string> BurritoChoices
+        // Property to get and set the burrito choices
+        public List<MenuOption> BurritoChoices
         {
-            get { return burritoChoices; }
-            private set { burritoChoices = value; }
+            get { return _burritoChoices; }
+            private set { _burritoChoices = value; }
         }
 
-        // Property to get and set the addonChoices
-        public List<string> AddonChoices
+        // Property to get and set the add-on choices
+        public List<MenuOption> AddonChoices
         {
-            get { return addonChoices; }
-            private set { addonChoices = value; }
+            get { return _addonChoices; }
+            private set { _addonChoices = value; }
         }
 
-        // collects user input and verifies it is valid and fits within the choice parameters provided
+        // Collects user input and verifies it is valid and within the provided range
         public int GetIntegerInput(string message, int minValue, int maxValue)
         {
             int input;
@@ -54,24 +54,27 @@ namespace Restaurant_Menu_System_V3
             }
         }
 
-        // displays user menu options using array of menu choices and shows a price if menu item has one
-        public void DisplayOrderOptions(string orderType, string[] orderOptions, decimal[] orderPrices)
+        // Displays menu options with their prices
+        public void DisplayOrderOptions(string orderType, MenuOption[] options)
         {
             Console.WriteLine($"\n{orderType}");
-            for (int i = 0; i < orderOptions.Length; i++)
+            int itemCount = 1;
+            foreach (MenuOption item in options)
             {
-                if (orderPrices[i] == 0.00m)
+                if (item.Price == 0.00m)
                 {
-                    Console.WriteLine($"{i + 1}. {orderOptions[i].ToUpper()}");
+                    Console.WriteLine($"{itemCount}. {item.Name.ToUpper()}");
                 }
                 else
                 {
-                    Console.WriteLine($"{i + 1}. {orderOptions[i].ToUpper()}....${orderPrices[i]}");
+                    Console.WriteLine($"{itemCount}. {item.Name.ToUpper()}....{item.Price.ToString("c")}");
                 }
+                itemCount++;
             }
         }
 
-        public bool AskYesNoQuestion(string question)
+        // Asks a yes/no question and returns the user's response as a boolean
+        public bool GetYesNoResponse(string question)
         {
             do
             {
@@ -93,111 +96,215 @@ namespace Restaurant_Menu_System_V3
             } while (true);
         }
 
-        // prompts user to enter their tortilla choice
+        // Prompts user to choose a tortilla
         public void ChooseTortilla()
         {
-            string[] tortillaChoiceOptions = { "FLOUR TORTILLA", "CORN TORTILLA", "SPICY CAYENNE TORTILLA" };
-            decimal[] tortillaChoicePrices = { 0.00m, 0.00m, 0.00m};
-            DisplayOrderOptions("TORTILLA CHOICE:", tortillaChoiceOptions, tortillaChoicePrices);
+            MenuOption[] tortillaMenuOption =
+            {
+                new MenuOption()
+                {
+                    Name = "FLOUR TORTILLA",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "CORN TORTILLA",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "SPICY CAYENNE TORTILLA",
+                    Price = 0.00m
+                }
+            };
+            DisplayOrderOptions("TORTILLA CHOICE:", tortillaMenuOption);
             int tortillaChoice = GetIntegerInput("Enter your tortilla choice: ", 1, 3) - 1;
 
-            // shows user what they selected
-            Console.WriteLine($"You selected: {tortillaChoiceOptions[tortillaChoice]}.");
-
-            // adds tortilla choice to list to display as receipt later
-            burritoChoices.Add(tortillaChoiceOptions[tortillaChoice]);
+            BurritoChoices.Insert(0, (tortillaMenuOption[tortillaChoice]));
+            Console.WriteLine($"You selected: {tortillaMenuOption[tortillaChoice].Name}.");
         }
 
-        // prompts user to enter their protein choice
+        // Prompts user to choose a protein
         public void ChooseProtein()
         {
-            string[] tortillaChoiceOptions = { "STEAK", "PORK", "CHORIZO", "CHICKEN" };
-            decimal[] tortillaChoicePrices = { 11.10m, 10.00m, 9.85m, 9.35m };
-            DisplayOrderOptions("PROTEIN CHOICE:", tortillaChoiceOptions, tortillaChoicePrices);
+            MenuOption[] proteinMenuOption =
+            {
+                new MenuOption()
+                {
+                    Name = "STEAK",
+                    Price = 11.10m
+                },
+                new MenuOption()
+                {
+                    Name = "PORK",
+                    Price = 10.00m
+                },
+                new MenuOption()
+                {
+                    Name = "CHORIZO",
+                    Price = 9.85m
+                },
+                new MenuOption()
+                {
+                    Name = "CHICKEN",
+                    Price = 9.35m
+                }
+            };
+            DisplayOrderOptions("PROTEIN CHOICE:", proteinMenuOption);
             int tortillaChoice = GetIntegerInput("Enter your protein choice: ", 1, 4) - 1;
 
-            // adds tortilla choice to list to display as receipt later
-            burritoChoices.Add(tortillaChoiceOptions[tortillaChoice]);
-            Cost += tortillaChoicePrices[tortillaChoice];
+            //Cost += proteinChoicePrices[tortillaChoice];
+            BurritoChoices.Insert(1, (proteinMenuOption[tortillaChoice]));
+            Console.WriteLine($"You selected: {proteinMenuOption[tortillaChoice].Name}, Your new total is ${proteinMenuOption[tortillaChoice].Price}");
 
-            // shows user what they selected and total cost of selection
-            Console.WriteLine($"You selected: {tortillaChoiceOptions[tortillaChoice]}, Your new total is ${Cost}");
-
-            bool addOnProtein = false;
-
-            do
-            {
-                if (AskYesNoQuestion($"Would you like to pick double your protein for ${Math.Round(Cost * 0.40m, 2)}?"))
+                if (GetYesNoResponse($"Would you like to pick double your protein for ${Math.Round(proteinMenuOption[tortillaChoice].Price * 0.40m, 2)}?"))
                 {
-                    Cost += tortillaChoicePrices[tortillaChoice] * 0.40m;
-                    Console.WriteLine($"You have chosen double protein. Your new total is: ${Math.Round(Cost, 2)}");
-                    burritoChoices[1] += " x2 PROTEIN";
-                    addOnProtein = true;
+                Cost.Add(proteinMenuOption[tortillaChoice].Price * 0.40m);
+                Console.WriteLine($"You have chosen double protein. Your new total is: ${Math.Round(proteinMenuOption[tortillaChoice].Price, 2)}");
+                BurritoChoices[1].Name += " x2 PROTEIN";
                 }
-                else
-                {
-                    addOnProtein = true;
-                }
-            }
-            while (!addOnProtein);
         }
 
-        // prompts user to enter their rice choice
+        // Prompts user to choose a rice option
         public void ChooseRice()
         {
-            string[] tortillaChoiceOptions = { "SPANISH RICE", "CILANTRO LIME RICE", "BROWN RICE", "NO RICE" };
-            decimal[] tortillaChoicePrices = { 0.00m, 0.00m, 0.00m, 0.00m, };
-            DisplayOrderOptions("RICE CHOICE:", tortillaChoiceOptions, tortillaChoicePrices);
+            MenuOption[] riceMenuOption =
+            {
+                new MenuOption()
+                {
+                    Name = "SPANISH RICE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "CILANTRO LIME RICE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "BROWN RICE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "NO RICE",
+                    Price = 0.00m
+                }
+            };
+            DisplayOrderOptions("RICE CHOICE:", riceMenuOption);
             int tortillaChoice = GetIntegerInput("Enter your rice choice: ", 1, 4) - 1;
 
-            // shows user what they selected and total cost of selection
-            Console.WriteLine($"You selected: {tortillaChoiceOptions[tortillaChoice]}.");
-
-            // adds tortilla choice to list to display as receipt later
-            burritoChoices.Add(tortillaChoiceOptions[tortillaChoice]);
+            BurritoChoices.Insert(2, (riceMenuOption[tortillaChoice]));
+            Console.WriteLine($"You selected: {riceMenuOption[tortillaChoice].Name}.");
         }
 
-        // prompts user to enter their bean choice
+        // Prompts user to choose a bean option
         public void ChooseBeans()
         {
-            string[] tortillaChoiceOptions = { "BLACK BEANS", "PINTO BEANS", "REFRIED BEANS", "NO BEANS" };
-            decimal[] tortillaChoicePrices = { 0.00m, 0.00m, 0.00m, 0.00m, };
-            DisplayOrderOptions("BEAN CHOICE:", tortillaChoiceOptions, tortillaChoicePrices);
+            MenuOption[] beanMenuOption =
+            {
+                new MenuOption()
+                {
+                    Name = "SPANISH RICE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "CILANTRO LIME RICE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "BROWN RICE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "NO RICE",
+                    Price = 0.00m
+                }
+            };
+            DisplayOrderOptions("BEAN CHOICE:", beanMenuOption);
             int tortillaChoice = GetIntegerInput("Enter your bean choice: ", 1, 4) - 1;
-
-            // shows user what they selected and total cost of selection
-            Console.WriteLine($"You selected: {tortillaChoiceOptions[tortillaChoice]}.");
-
-            // adds tortilla choice to list to display as receipt later
-            burritoChoices.Add(tortillaChoiceOptions[tortillaChoice]);
+            
+            BurritoChoices.Insert(3, (beanMenuOption[tortillaChoice]));
+            Console.WriteLine($"You selected: {beanMenuOption[tortillaChoice].Name}.");
         }
 
-        // prompts user to enter their add-on choices
+        // Prompts user to choose add-ons
         public void ChooseAddOns()
         {
-            bool keepAddingAddOns = true;
-
-            while (keepAddingAddOns)
+            MenuOption[] addonMenuOption =
             {
-                string[] addonChoiceOptions = { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" };
-                decimal[] addonChoicePrices = { 0.00m, 0.00m, 0.00m, 0.00m, 0.00m, 0.00m, 1.60m, 2.65m };
-                DisplayOrderOptions("RICE CHOICE:", addonChoiceOptions, addonChoicePrices);
+                new MenuOption()
+                {
+                    Name = "GRILLED CORN",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "LETTUCE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "ONIONS",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "SOUR CREAM",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "POTATOES",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "CHEESE",
+                    Price = 0.00m
+                },
+                new MenuOption()
+                {
+                    Name = "QUESO",
+                    Price = 1.60m
+                },
+                new MenuOption()
+                {
+                    Name = "GUACAMOLE",
+                    Price = 2.65m
+                },
+            };
+            while (true)
+            {
+                DisplayOrderOptions("RICE CHOICE:", addonMenuOption);
                 int addonChoice = GetIntegerInput("Enter your add-on choice: ", 1, 8) - 1;
 
-                if (addonChoices.Contains(addonChoiceOptions[addonChoice]))
+                if (AddonChoices.Contains(addonMenuOption[addonChoice]))
                 {
-                    Console.WriteLine($"You have already selected {addonChoiceOptions[addonChoice]}. Please choose a different add-on.");
+                    Console.WriteLine($"You have already selected {addonMenuOption[addonChoice].Name}. Please choose a different add-on.");
                 }
                 else
                 {
-                    // adds add-on choice to list to display as receipt later
-                    addonChoices.Add($"{addonChoiceOptions[addonChoice]}");
-                    Cost += addonChoicePrices[addonChoice];
-
-                    // Show the user what they selected
-                    Console.WriteLine($"You selected: {addonChoiceOptions[addonChoice]}.");
+                    if (addonMenuOption[addonChoice].Price == 0.00m)
+                    {
+                        AddonChoices.Add(addonMenuOption[addonChoice]);
+                        Console.WriteLine($"You selected: {addonMenuOption[addonChoice].Name}.");
+                    }
+                    else
+                    {
+                        AddonChoices.Add(addonMenuOption[addonChoice]);
+                        Console.WriteLine($"You selected: {addonMenuOption[addonChoice].Name}.");
+                        Cost.Add(addonMenuOption[addonChoice].Price);
+                    }
                 }
-                keepAddingAddOns = AskYesNoQuestion("Would you like to pick another add-on?");
+
+                if (!GetYesNoResponse("Would you like to pick another add-on?"))
+                {
+                    break;
+                }
             }
         }
     }
