@@ -5,34 +5,62 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant_Menu_Systemv3
+namespace Restaurant_Menu_System_V3
 {
     public class EditOrderItem
     {
-        private OrderInputAndOptions orderChoice;
-        private CustomerReceipt customerReceipt;
+        private OrderInputAndOptions _orderChoice;
+        private CustomerReceipt _customerReceipt;
 
         public EditOrderItem(OrderInputAndOptions orderchoice)
         {
-            this.orderChoice = orderchoice;
+            this._orderChoice = orderchoice;
         }
-        public void ClearChoices()
+        // Method to remove an item and adjust the cost
+        public void RemoveItem(string item)
         {
-            orderChoice.BurritoChoices.Clear();
-            orderChoice.AddonChoices.Clear();
-            orderChoice.Cost = 0;
+            // Define the menu options and prices locally
+            string[] proteinChoiceOptions = { "STEAK", "PORK", "CHORIZO", "CHICKEN" };
+            decimal[] proteinChoicePrices = { 11.10m, 10.00m, 9.85m, 9.35m };
+
+            string[] addonChoiceOptions = { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" };
+            decimal[] addonChoicePrices = { 0.00m, 0.00m, 0.00m, 0.00m, 0.00m, 0.00m, 1.60m, 2.65m };
+
+            decimal price = 0.00m;
+
+            // Check if the item is a protein choice
+            int index = Array.IndexOf(proteinChoiceOptions, item);
+            if (index >= 0)
+            {
+                price = proteinChoicePrices[index];
+                _orderChoice.BurritoChoices.Remove(item);
+                _orderChoice.Cost -= price;
+            }
+            else
+            {
+                // Check if the item is an add-on choice
+                index = Array.IndexOf(addonChoiceOptions, item);
+                if (index >= 0)
+                {
+                    price = addonChoicePrices[index];
+                    _orderChoice.AddonChoices.Remove(item);
+                    _orderChoice.Cost -= price;
+                }
+            }
+
         }
+
         // prompts user to ask if they would like to edit their order
         // displays options for user to edit and takes them back to their spot in the menu
         public void ShowOrderOptionsToEdit()
         {
-            if (!orderChoice.AskYesNoQuestion("Would you like to edit your order?"))
+            if (!_orderChoice.GetYesNoResponse("Would you like to edit your order?"))
             {
                 Console.WriteLine("No changes made to the order.");
                 return;
             }
 
-            Action[] orderOptions = { orderChoice.ChooseTortilla, orderChoice.ChooseProtein, orderChoice.ChooseRice, orderChoice.ChooseBeans, orderChoice.ChooseAddOns };
+            Action[] orderOptions = { _orderChoice.ChooseTortilla, _orderChoice.ChooseProtein, _orderChoice.ChooseRice, _orderChoice.ChooseBeans, _orderChoice.ChooseAddOns };
             string[] orderOptionNames = { "Edit Tortilla Choice","Edit Protein Choice","Edit Rice Choice","Edit Bean Choice","Edit Add-On Choices" };
 
             while (true)
@@ -43,24 +71,22 @@ namespace Restaurant_Menu_Systemv3
                     Console.WriteLine($"{i+1}. {orderOptionNames[i]} ");
                 }
 
-                int choice = orderChoice.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
+                int choice = _orderChoice.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
 
-                // need to find a way to clear items from list that user is editing to add in the newly selected items
-                //if (choice == 0)
-                //{
-                //    orderChoice.BurritoChoices.Clear();
-                //}
-                //else if (choice == 4)
-                //{
-                //    orderChoice.AddonChoices.Clear();
-                //}
-                //else
-                //{
-                //    orderChoice.BurritoChoices.RemoveAt(choice);
-                //}
+                // Remove the item and its cost before allowing the user to select a new one
+                if (choice < 4)
+                {
+                    string itemToRemove = _orderChoice.BurritoChoices[choice];
+                    RemoveItem(itemToRemove);
+                }
+                else
+                {
+                    _orderChoice.AddonChoices.Clear();
+                }
+
                 orderOptions[choice]();
 
-                if (!orderChoice.AskYesNoQuestion("Would you like to make another edit?"))
+                if (!_orderChoice.GetYesNoResponse("Would you like to make another edit?"))
                 {
                     break;
                 }

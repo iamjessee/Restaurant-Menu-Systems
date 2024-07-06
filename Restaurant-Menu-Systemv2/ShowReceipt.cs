@@ -11,49 +11,55 @@ namespace Restaurant_Menu_System_V3
     public class CustomerReceipt
     {
         // calling field from another class to get items selected by user
-        private OrderInputAndOptions orderChoice;
+        private OrderInputAndOptions _orderChoice;
+        private Random _rnd = new Random();
 
         // Constructor to initialize the orderChoice instance
         public CustomerReceipt(OrderInputAndOptions orderchoice)
         {
-            this.orderChoice = orderchoice;
+            this._orderChoice = orderchoice;
         }
 
         // generate order number
-        public int GetOrderID()
+        public int GenerateOrderID()
         {
-            Random rnd = new Random();
-            int orderId = rnd.Next(1, 100);
-            return orderId;
+            return _rnd.Next(1, 100);
         }
         // gets complete order selected by user and displays it in a readable itemized format for user
-        public string GetOrderDescrption()
+        public string GetOrderDescription()
         {
-            string burrito = string.Join("\n", orderChoice.BurritoChoices);
-            string addons = string.Join("\n", orderChoice.AddonChoices);
+            string burrito = string.Join("\n", _orderChoice.BurritoChoices);
+            string addons = string.Join("\n", _orderChoice.AddonChoices);
             return $"\n{burrito}\n{addons}";
         }
 
         // calculates total tax paid on total cost of items selected by user
-        public decimal GetAmount()
+        public decimal CalculateTax()
         {
             decimal taxRate = 0.085m;
-            return Math.Round(orderChoice.Cost * taxRate, 2);
+            return Math.Round(_orderChoice.Cost * taxRate, 2);
         }
  
         // adds together total tax and cost of selected items to show user their total cost
-        public decimal GetTotal()
+        public decimal CalculateTotal()
         {
-            return Math.Round(orderChoice.Cost += GetAmount(), 2);
+            return Math.Round(_orderChoice.Cost + CalculateTax(), 2);
         }
 
         // displays full receipt to user
-        public void GetReceiptDisplay(OrderName ordername)
+        public void DisplayReceipt(OrderName ordername)
         {
-            Console.WriteLine($"\nThanks {ordername.Name}, your order is complete. \n\nOrder ID: {GetOrderID()}\n{GetOrderDescrption()}");
-            Console.WriteLine($"\nSUBTOTAL: ${Math.Round(orderChoice.Cost, 2)}");
-            Console.WriteLine($"TAX: ${GetAmount()}");
-            Console.WriteLine($"TOTAL: ${GetTotal()}");
+            int orderId = GenerateOrderID();
+            string orderDescription = GetOrderDescription();
+            decimal tax = CalculateTax();
+            decimal total = CalculateTotal();
+
+            Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
+            Console.WriteLine($"\nOrder ID: {orderId}");
+            Console.WriteLine(orderDescription);
+            Console.WriteLine($"\nSUBTOTAL: ${Math.Round(_orderChoice.Cost, 2)}");
+            Console.WriteLine($"TAX: ${tax}");
+            Console.WriteLine($"TOTAL: ${total}");
         }
     }
 }
