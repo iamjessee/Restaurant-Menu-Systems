@@ -18,8 +18,8 @@ class Program
         orderInputAndOptions.ChooseAddOns();
 
         // prompt user to edit their order if needed
-        EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
-        orderEditor.ShowOrderOptionsToEdit();
+        //EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
+        //orderEditor.ShowOrderOptionsToEdit();
 
         // displays user receipt
         CustomerReceipt customerReceipt = new CustomerReceipt(orderInputAndOptions);

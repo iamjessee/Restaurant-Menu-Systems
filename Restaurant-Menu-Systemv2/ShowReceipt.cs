@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,22 +29,37 @@ namespace Restaurant_Menu_System_V3
         // gets complete order selected by user and displays it in a readable itemized format for user
         public string GetOrderDescription()
         {
-            string burrito = string.Join("\n", _orderChoice.BurritoChoices);
-            string addons = string.Join("\n", _orderChoice.AddonChoices);
-            return $"\n{burrito}\n{addons}";
+            string burrito = "";
+            foreach (MenuOption item in _orderChoice.BurritoChoices)
+            {
+                burrito += $"\n{item.Name}";
+            }
+            return burrito;
+        }
+
+        // adds together total tax and cost of selected items to show user their total cost
+        public decimal CalculateSubTotal()
+        {
+            decimal subTotal = 0.00m;
+
+            foreach (MenuOption item in _orderChoice.BurritoChoices)
+            {
+                subTotal += item.Price;
+            }
+
+            return Math.Round(subTotal, 2);
         }
 
         // calculates total tax paid on total cost of items selected by user
-        public decimal CalculateTax()
+        public decimal CalculateTax(decimal subTotal)
         {
             decimal taxRate = 0.085m;
-            return Math.Round(_orderChoice.Cost * taxRate, 2);
+            return Math.Round(subTotal * taxRate, 2);
         }
- 
-        // adds together total tax and cost of selected items to show user their total cost
-        public decimal CalculateTotal()
+
+        public decimal CalculateTotal(decimal subTotal, decimal tax)
         {
-            return Math.Round(_orderChoice.Cost + CalculateTax(), 2);
+            return subTotal + tax;
         }
 
         // displays full receipt to user
@@ -51,13 +67,14 @@ namespace Restaurant_Menu_System_V3
         {
             int orderId = GenerateOrderID();
             string orderDescription = GetOrderDescription();
-            decimal tax = CalculateTax();
-            decimal total = CalculateTotal();
+            decimal subTotal = CalculateSubTotal();
+            decimal tax = CalculateTax(subTotal);
+            decimal total = CalculateTotal(subTotal, tax);
 
             Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
             Console.WriteLine($"\nOrder ID: {orderId}");
             Console.WriteLine(orderDescription);
-            Console.WriteLine($"\nSUBTOTAL: ${Math.Round(_orderChoice.Cost, 2)}");
+            Console.WriteLine($"\nSUBTOTAL: ${subTotal}");
             Console.WriteLine($"TAX: ${tax}");
             Console.WriteLine($"TOTAL: ${total}");
         }
