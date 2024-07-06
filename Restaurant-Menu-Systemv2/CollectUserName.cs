@@ -4,17 +4,17 @@ namespace Restaurant_Menu_System_V3
 {
     public class OrderName
     {
-        private string _name;
+        private string name;
 
         // Property to get and set the name
         public string Name
         {
-            get { return _name; }
-            private set { _name = value; }
+            get { return name; }
+            private set { name = value; }
         }
 
-        // Greets the user and prompts them to enter a name for the order
-        public void GreetAndCollectName()
+        // greets user and prompts them to enter a name to personalize their order
+        public void DisplayGreetingAndCollectName()
         {
             Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
 
@@ -25,8 +25,8 @@ namespace Restaurant_Menu_System_V3
 
                 if (IsValidName(input))
                 {
-                    _name = input;
-                    Console.WriteLine($"Welcome {_name} Please use the numbers provided when making a selection.");
+                    Name = input;
+                    Console.WriteLine($"Welcome {Name} Please use the numbers provided when making a selection.");
                     break;
                 }
                 else
@@ -36,7 +36,8 @@ namespace Restaurant_Menu_System_V3
             }
         }
 
-        // Validates the user's name to ensure it contains only alphabetical characters and spaces, and is between 1 and 26 characters long
+        // method to validate the users name
+        // Ensures the name consists of alphabetical characters and spaces only, and is between 1 and 26 characters long
         public bool IsValidName(string name)
         {
             return Regex.IsMatch(name, @"^[a-zA-Z\s]{1,26}$");

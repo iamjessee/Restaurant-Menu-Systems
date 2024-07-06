@@ -1,4 +1,5 @@
 ﻿using Restaurant_Menu_System_V3;
+using Restaurant_Menu_Systemv3;
 using System.ComponentModel.DataAnnotations;
 
 class Program
@@ -6,23 +7,23 @@ class Program
     static void Main(string[] args)
     {
         // calls class and methods for greeting user and collecting name for order
-        OrderName customerName = new OrderName();
-        customerName.GreetAndCollectName();
+        OrderName ordername = new OrderName();
+        ordername.DisplayGreetingAndCollectName();
 
         // calls class and methods for creating customers order
-        OrderInputAndOptions orderInputAndOptions = new OrderInputAndOptions();
-        orderInputAndOptions.ChooseTortilla();
-        orderInputAndOptions.ChooseProtein();
-        orderInputAndOptions.ChooseRice();
-        orderInputAndOptions.ChooseBeans();
-        orderInputAndOptions.ChooseAddOns();
+        OrderInputAndOptions orderchoice = new OrderInputAndOptions();
+        orderchoice.ChooseTortilla();
+        orderchoice.ChooseProtein();
+        orderchoice.ChooseRice();
+        orderchoice.ChooseBeans();
+        orderchoice.ChooseAddOns();
 
         // prompt user to edit their order if needed
-        //EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
-        //orderEditor.ShowOrderOptionsToEdit();
+        EditOrderItem editOrderItem = new EditOrderItem(orderchoice);
+        editOrderItem.ShowOrderOptionsToEdit();
 
         // displays user receipt
-        CustomerReceipt customerReceipt = new CustomerReceipt(orderInputAndOptions);
-        customerReceipt.DisplayReceipt(customerName);
+        CustomerReceipt receipt = new CustomerReceipt(orderchoice);
+        receipt.GetReceiptDisplay(ordername);
     }
 }
