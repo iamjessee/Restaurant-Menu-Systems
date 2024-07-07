@@ -26,13 +26,14 @@ namespace Restaurant_Menu_System_V3
         {
             return _rnd.Next(1, 100);
         }
+
         // gets complete order selected by user and displays it in a readable itemized format for user
         public string GetOrderDescription()
         {
             string burrito = "";
             foreach (MenuOption item in _orderChoice.BurritoChoices)
             {
-                burrito += $"\n{item.Name}";
+                burrito += $"\n{item.ItemName}";
             }
             return burrito;
         }

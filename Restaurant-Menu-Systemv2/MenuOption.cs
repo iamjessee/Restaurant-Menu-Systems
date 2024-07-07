@@ -8,7 +8,7 @@ namespace Restaurant_Menu_System_V3
 {
     public class MenuOption
     {
-        public string Name { get; set; }
+        public string ItemName { get; set; }
         public decimal Price { get; set; }
     }
 }
