@@ -123,7 +123,7 @@ namespace Restaurant_Menu_System_V3
                    new MenuOption() { ItemName = "X2 PROTEIN", Price = proteinMenuOption[proteinChoice].Price * 0.40m }
                 };
 
-                BurritoChoices.Insert(2, doubleProteinMenuOption[0]);
+                BurritoChoices.Add(doubleProteinMenuOption[0]);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("RICE CHOICE:", riceMenuOption);
             int riceChoice = GetIntegerInput("Enter your rice choice: ", 1, 4) - 1;
 
-            BurritoChoices.Insert(3, (riceMenuOption[riceChoice]));
+            BurritoChoices.Insert(2, (riceMenuOption[riceChoice]));
             Console.WriteLine($"You selected: {riceMenuOption[riceChoice].ItemName}.");
         }
 
@@ -150,16 +150,16 @@ namespace Restaurant_Menu_System_V3
         {
             MenuOption[] beanMenuOption =
             {
-                new MenuOption() { ItemName = "SPANISH RICE", Price = 0.00m },
-                new MenuOption() { ItemName = "CILANTRO LIME RICE", Price = 0.00m },
-                new MenuOption() { ItemName = "BROWN RICE", Price = 0.00m },
-                new MenuOption() { ItemName = "NO RICE", Price = 0.00m }
+                new MenuOption() { ItemName = "BLACK BEANS", Price = 0.00m },
+                new MenuOption() { ItemName = "PINTO BEANS", Price = 0.00m },
+                new MenuOption() { ItemName = "REFRIED BEANS", Price = 0.00m },
+                new MenuOption() { ItemName = "NO BEANS", Price = 0.00m }
             };
 
             DisplayOrderOptions("BEAN CHOICE:", beanMenuOption);
             int beanChoice = GetIntegerInput("Enter your bean choice: ", 1, 4) - 1;
 
-            BurritoChoices.Insert(4, (beanMenuOption[beanChoice]));
+            BurritoChoices.Insert(3, (beanMenuOption[beanChoice]));
             Console.WriteLine($"You selected: {beanMenuOption[beanChoice].ItemName}.");
         }
 

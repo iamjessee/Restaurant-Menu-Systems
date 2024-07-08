@@ -33,10 +33,19 @@ namespace Restaurant_Menu_System_V3
             string burrito = "";
             foreach (MenuOption item in _orderChoice.BurritoChoices)
             {
-                burrito += $"\n{item.ItemName}";
+                //burrito += $"\n{item.ItemName}";
+                if (item.Price == 0.00m)
+                {
+                    burrito += $"\n{item.ItemName.ToUpper()}";
+                }
+                else
+                {
+                    burrito += $"\n{item.ItemName.ToUpper() + "...." + item.Price.ToString("c")}";
+                }
             }
             return burrito;
         }
+
 
         // adds together total tax and cost of selected items to show user their total cost
         public decimal CalculateSubTotal()
@@ -71,6 +80,8 @@ namespace Restaurant_Menu_System_V3
             decimal subTotal = CalculateSubTotal();
             decimal tax = CalculateTax(subTotal);
             decimal total = CalculateTotal(subTotal, tax);
+
+
 
             Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
             Console.WriteLine($"\nOrder ID: {orderId}");
