@@ -17,7 +17,13 @@ class Program
         orderInputAndOptions.SetCustomerReceipt(customerReceipt);
 
         // calls class and methods for creating customers order
-        orderInputAndOptions.ChooseTortilla();
+        orderInputAndOptions.EntreeChoice();
+
+        if (!orderInputAndOptions.BurritoChoices.Any(option => option.ItemName == "BOWL"))
+        {
+            orderInputAndOptions.ChooseTortilla();
+        }
+
         orderInputAndOptions.ChooseProtein();
         orderInputAndOptions.ChooseRice();
         orderInputAndOptions.ChooseBeans();

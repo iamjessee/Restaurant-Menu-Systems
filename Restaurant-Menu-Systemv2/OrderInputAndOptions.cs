@@ -20,11 +20,9 @@ namespace Restaurant_Menu_System_V3
 
         //set the CustomerReceipt instance enabling rolling total calculation
         public void SetCustomerReceipt(CustomerReceipt receipt)
-    {
-        _customerReceipt = receipt;
-    }
-
-
+        {
+            this._customerReceipt = receipt;
+        }
 
         // collects user input and verifies it is valid and within the provided range
         public int GetIntegerInput(string message, int minValue, int maxValue)
@@ -90,6 +88,19 @@ namespace Restaurant_Menu_System_V3
             } while (true);
         }
 
+        public void EntreeChoice()
+        {
+            MenuOption[] option =
+            {
+                new MenuOption() { ItemName = "BOWL", Price = 0.00m },
+                new MenuOption() { ItemName = "BURRITO", Price = 0.00m },
+            };
+
+            DisplayOrderOptions("ENTRÉE CHOICE: ", option);
+            int choice = GetIntegerInput("Enter your entrée choice: ", 1, 2) - 1;
+            BurritoChoices.Add(option[choice]);
+        }
+
         // prompts user to choose a tortilla
         public void ChooseTortilla()
         {
@@ -103,7 +114,7 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("TORTILLA CHOICE:", tortillaMenuOption);
             int tortillaChoice = GetIntegerInput("Enter your tortilla choice: ", 1, 3) - 1;
 
-            BurritoChoices.Insert(0, (tortillaMenuOption[tortillaChoice]));
+            BurritoChoices.Add(tortillaMenuOption[tortillaChoice]);
             Console.WriteLine($"You selected: {tortillaMenuOption[tortillaChoice].ItemName}.");
         }
 

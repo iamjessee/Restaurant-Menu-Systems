@@ -81,8 +81,6 @@ namespace Restaurant_Menu_System_V3
             decimal tax = CalculateTax(subTotal);
             decimal total = CalculateTotal(subTotal, tax);
 
-
-
             Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
             Console.WriteLine($"\nOrder ID: {orderId}");
             Console.WriteLine(orderDescription);
