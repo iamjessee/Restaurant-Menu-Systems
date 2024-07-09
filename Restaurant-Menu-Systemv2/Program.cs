@@ -9,8 +9,14 @@ class Program
         OrderName customerName = new OrderName();
         customerName.GreetAndCollectName();
 
-        // calls class and methods for creating customers order
+        // create an instance of CustomerReceipt
         OrderInputAndOptions orderInputAndOptions = new OrderInputAndOptions();
+        CustomerReceipt customerReceipt = new CustomerReceipt(orderInputAndOptions);
+
+        // set the CustomerReceipt instance in OrderInputAndOptions
+        orderInputAndOptions.SetCustomerReceipt(customerReceipt);
+
+        // calls class and methods for creating customers order
         orderInputAndOptions.ChooseTortilla();
         orderInputAndOptions.ChooseProtein();
         orderInputAndOptions.ChooseRice();
@@ -22,7 +28,6 @@ class Program
         //orderEditor.ShowOrderOptionsToEdit();
 
         // displays user receipt
-        CustomerReceipt customerReceipt = new CustomerReceipt(orderInputAndOptions);
         customerReceipt.DisplayReceipt(customerName);
     }
 }

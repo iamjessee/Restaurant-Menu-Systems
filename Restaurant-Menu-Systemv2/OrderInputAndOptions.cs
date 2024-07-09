@@ -1,22 +1,32 @@
 ﻿using System.ComponentModel.Design;
 using System.Linq;
+using System.Numerics;
 using System.Xml.Linq;
 
 namespace Restaurant_Menu_System_V3
 {
-    // Manages order input and options selection
+    // manages order input and options selection
     public class OrderInputAndOptions
     {
         // Property to get and set the burrito choices
         public List<MenuOption> BurritoChoices { get; private set; }
+        private CustomerReceipt _customerReceipt;
 
-        // Constructor initializes the BurritoChoices list
+        // constructor initializes the BurritoChoices list
         public OrderInputAndOptions()
         {
             BurritoChoices = new List<MenuOption>();
         }
 
-        // Collects user input and verifies it is valid and within the provided range
+        //set the CustomerReceipt instance enabling rolling total calculation
+        public void SetCustomerReceipt(CustomerReceipt receipt)
+    {
+        _customerReceipt = receipt;
+    }
+
+
+
+        // collects user input and verifies it is valid and within the provided range
         public int GetIntegerInput(string message, int minValue, int maxValue)
         {
             int input;
@@ -38,7 +48,7 @@ namespace Restaurant_Menu_System_V3
             }
         }
 
-        // Displays menu options with their prices
+        // displays menu options with their prices
         public void DisplayOrderOptions(string orderType, MenuOption[] options)
         {
             Console.WriteLine($"\n{orderType}");
@@ -57,7 +67,7 @@ namespace Restaurant_Menu_System_V3
             }
         }
 
-        // Asks a yes/no question and returns the user's response as a boolean
+        // asks a yes/no question and returns the user's response as a boolean
         public bool GetYesNoResponse(string question)
         {
             do
@@ -80,7 +90,7 @@ namespace Restaurant_Menu_System_V3
             } while (true);
         }
 
-        // Prompts user to choose a tortilla
+        // prompts user to choose a tortilla
         public void ChooseTortilla()
         {
             MenuOption[] tortillaMenuOption =
@@ -97,7 +107,7 @@ namespace Restaurant_Menu_System_V3
             Console.WriteLine($"You selected: {tortillaMenuOption[tortillaChoice].ItemName}.");
         }
 
-        // Prompts user to choose a protein
+        // prompts user to choose a protein
         public void ChooseProtein()
         {
             MenuOption[] proteinMenuOption =
@@ -111,23 +121,26 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("PROTEIN CHOICE:", proteinMenuOption);
             int proteinChoice = GetIntegerInput("Enter your protein choice: ", 1, 4) - 1;
 
-            BurritoChoices.Insert(1, (proteinMenuOption[proteinChoice]));
-            Console.WriteLine($"You selected: {proteinMenuOption[proteinChoice].ItemName}, Your new total is ${proteinMenuOption[proteinChoice].Price}");
+            BurritoChoices.Add(proteinMenuOption[proteinChoice]);
+            decimal rollingTotal = _customerReceipt.CalculateSubTotal();
+            Console.WriteLine($"You selected: {proteinMenuOption[proteinChoice].ItemName}, Your new total is ${rollingTotal}");
 
-            if (GetYesNoResponse($"Would you like to pick double your protein for ${Math.Round(proteinMenuOption[proteinChoice].Price * 0.40m, 2)}?"))
+            decimal doubleProteinPrice = Math.Round(proteinMenuOption[proteinChoice].Price * 0.40m, 2);
+
+            if (GetYesNoResponse($"Would you like to double your protein for ${doubleProteinPrice}?"))
             {
-                Console.WriteLine($"You have chosen double protein. Your new total is: ${Math.Round(proteinMenuOption[proteinChoice].Price, 2)}");
-
                 MenuOption[] doubleProteinMenuOption =
                 {
                    new MenuOption() { ItemName = "X2 PROTEIN", Price = proteinMenuOption[proteinChoice].Price * 0.40m }
                 };
 
                 BurritoChoices.Add(doubleProteinMenuOption[0]);
+                rollingTotal = _customerReceipt.CalculateSubTotal();
+                Console.WriteLine($"You have chosen double protein. Your new total is: ${rollingTotal}");
             }
         }
 
-        // Prompts user to choose a rice option
+        // prompts user to choose a rice option
         public void ChooseRice()
         {
             MenuOption[] riceMenuOption =
@@ -141,11 +154,11 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("RICE CHOICE:", riceMenuOption);
             int riceChoice = GetIntegerInput("Enter your rice choice: ", 1, 4) - 1;
 
-            BurritoChoices.Insert(2, (riceMenuOption[riceChoice]));
+            BurritoChoices.Add(riceMenuOption[riceChoice]);
             Console.WriteLine($"You selected: {riceMenuOption[riceChoice].ItemName}.");
         }
 
-        // Prompts user to choose a bean option
+        // prompts user to choose a bean option
         public void ChooseBeans()
         {
             MenuOption[] beanMenuOption =
@@ -159,11 +172,11 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("BEAN CHOICE:", beanMenuOption);
             int beanChoice = GetIntegerInput("Enter your bean choice: ", 1, 4) - 1;
 
-            BurritoChoices.Insert(3, (beanMenuOption[beanChoice]));
+            BurritoChoices.Add(beanMenuOption[beanChoice]);
             Console.WriteLine($"You selected: {beanMenuOption[beanChoice].ItemName}.");
         }
 
-        // Prompts user to choose add-ons
+        // prompts user to choose add-ons
         public void ChooseAddOns()
         {
             MenuOption[] addonMenuOption =
@@ -197,7 +210,8 @@ namespace Restaurant_Menu_System_V3
                     else
                     {
                         BurritoChoices.Add(addonMenuOption[addonChoice]);
-                        Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}.");
+                        decimal rollingTotal = _customerReceipt.CalculateSubTotal();
+                        Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}. For ${addonMenuOption[addonChoice].Price}. Your new total is ${rollingTotal}");
                     }
                 }
 
