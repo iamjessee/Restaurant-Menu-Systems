@@ -88,7 +88,7 @@ namespace Restaurant_Menu_System_V3
             } while (true);
         }
 
-        public void EntreeChoice()
+        public void ChooseEntree()
         {
             MenuOption[] option =
             {
@@ -98,7 +98,7 @@ namespace Restaurant_Menu_System_V3
 
             DisplayOrderOptions("ENTRÉE CHOICE: ", option);
             int choice = GetIntegerInput("Enter your entrée choice: ", 1, 2) - 1;
-            BurritoChoices.Add(option[choice]);
+            BurritoChoices.Insert(0, (option[choice]));
         }
 
         // prompts user to choose a tortilla
@@ -231,6 +231,42 @@ namespace Restaurant_Menu_System_V3
                     break;
                 }
             }
+        }
+
+        // clears the previous entrée choice
+        public void ClearEntreeChoice()
+        {
+            BurritoChoices.RemoveAll(choice => choice.ItemName == "BOWL" || choice.ItemName == "BURRITO");
+        }
+
+        // clears the previous tortilla choice
+        public void ClearTortillaChoice()
+        {
+            BurritoChoices.RemoveAll(choice => choice.ItemName.Contains("TORTILLA"));
+        }
+
+        // clears the previous protein choice
+        public void ClearProteinChoice()
+        {
+            BurritoChoices.RemoveAll(choice => new[] { "STEAK", "PORK", "CHORIZO", "CHICKEN", "X2 PROTEIN" }.Contains(choice.ItemName));
+        }
+
+        // clears the previous rice choice
+        public void ClearRiceChoice()
+        {
+            BurritoChoices.RemoveAll(choice => new[] { "SPANISH RICE", "CILANTRO LIME RICE", "BROWN RICE", "NO RICE" }.Contains(choice.ItemName));
+        }
+
+        // clears the previous bean choice
+        public void ClearBeanChoice()
+        {
+            BurritoChoices.RemoveAll(choice => new[] { "BLACK BEANS", "PINTO BEANS", "REFRIED BEANS", "NO BEANS" }.Contains(choice.ItemName));
+        }
+
+        // clears the previous add-on choices
+        public void ClearAddonChoices()
+        {
+            BurritoChoices.RemoveAll(choice => new[] { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" }.Contains(choice.ItemName));
         }
     }
 }

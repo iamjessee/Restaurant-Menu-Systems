@@ -17,7 +17,7 @@ class Program
         orderInputAndOptions.SetCustomerReceipt(customerReceipt);
 
         // calls class and methods for creating customers order
-        orderInputAndOptions.EntreeChoice();
+        orderInputAndOptions.ChooseEntree();
 
         if (!orderInputAndOptions.BurritoChoices.Any(option => option.ItemName == "BOWL"))
         {
@@ -30,8 +30,14 @@ class Program
         orderInputAndOptions.ChooseAddOns();
 
         // prompt user to edit their order if needed
-        //EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
-        //orderEditor.ShowOrderOptionsToEdit();
+        EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
+        orderEditor.ShowOrderOptionsToEdit();
+
+        if (!orderInputAndOptions.BurritoChoices.Any(option => option.ItemName == "BOWL") && !orderInputAndOptions.BurritoChoices.Any(option => option.ItemName.Contains("TORTILLA")))
+        {
+            Console.WriteLine("Please select the tortilla you would for your burrito.");
+            orderInputAndOptions.ChooseTortilla();
+        }
 
         // displays user receipt
         customerReceipt.DisplayReceipt(customerName);
