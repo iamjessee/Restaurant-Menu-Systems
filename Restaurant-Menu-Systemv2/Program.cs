@@ -29,7 +29,7 @@ class Program
         orderInputAndOptions.ChooseBeans();
         orderInputAndOptions.ChooseAddOns();
 
-        // prompt user to edit their order if needed
+        // prompt user to edit their order if needed and skips tortilla option if bowl is selected
         EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
         orderEditor.ShowOrderOptionsToEdit();
 

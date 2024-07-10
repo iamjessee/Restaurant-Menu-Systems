@@ -1,31 +1,20 @@
-﻿//using Restaurant_Menu_System_V3;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Restaurant_Menu_System_V3;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Restaurant_Menu_System_V3
 {
     public class EditOrderItem
     {
         private OrderInputAndOptions _orderChoice;
-        private CustomerReceipt _customerReceipt;
 
         public EditOrderItem(OrderInputAndOptions orderchoice)
         {
             this._orderChoice = orderchoice;
         }
-        // Method to remove an item and adjust the cost
-        //public void RemoveItem()
-        //{
-
-        //    foreach (MenuOption item in _orderChoice.BurritoChoices) 
-        //    {
-        //        if (_orderChoice.BurritoChoices.Any(item.ItemName))
-        //    }
-
-        //}
 
         // prompts user to ask if they would like to edit their order
         // displays options for user to edit and takes them back to their spot in the menu
@@ -37,17 +26,30 @@ namespace Restaurant_Menu_System_V3
                 return;
             }
 
-            Action[] orderOptions = { _orderChoice.ChooseEntree, _orderChoice.ChooseTortilla, _orderChoice.ChooseProtein, _orderChoice.ChooseRice, _orderChoice.ChooseBeans, _orderChoice.ChooseAddOns };
-            string[] orderOptionNames = { "Edit Entrée Choice", "Edit Tortilla Choice", "Edit Protein Choice", "Edit Rice Choice", "Edit Bean Choice", "Edit Add-On Choices" };
+            Action[] orderOptions =
+            {
+               _orderChoice.ChooseEntree,
+               _orderChoice.ChooseTortilla,
+               _orderChoice.ChooseProtein,
+               _orderChoice.ChooseRice,
+               _orderChoice.ChooseBeans,
+               _orderChoice.ChooseAddOns
+            };
+
+            MenuOption[] options =
+            {
+                new MenuOption() { ItemName = "Edit Entrée Choice" },
+                new MenuOption() { ItemName = "Edit Tortilla Choice" },
+                new MenuOption() { ItemName = "Edit Protein Choice" },
+                new MenuOption() { ItemName = "Edit Rice Choice" },
+                new MenuOption() { ItemName = "Edit Bean Choice" },
+                new MenuOption() { ItemName = "Edit Add-On Choices" },
+            };
+
+            _orderChoice.DisplayOrderOptions("CHOOSE WHICH MENU ITEM YOU WOULD LIKE TO EDIT:", options);
 
             while (true)
             {
-                Console.WriteLine();
-                for (int i = 0; i < orderOptionNames.Length; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {orderOptionNames[i]} ");
-                }
-
                 int choice = _orderChoice.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
 
                 // Clear previous selection based on the choice

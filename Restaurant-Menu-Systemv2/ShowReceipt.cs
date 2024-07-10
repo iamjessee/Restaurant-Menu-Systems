@@ -33,7 +33,6 @@ namespace Restaurant_Menu_System_V3
             string burrito = "";
             foreach (MenuOption item in _orderChoice.BurritoChoices)
             {
-                //burrito += $"\n{item.ItemName}";
                 if (item.Price == 0.00m)
                 {
                     burrito += $"\n{item.ItemName.ToUpper()}";
@@ -46,8 +45,7 @@ namespace Restaurant_Menu_System_V3
             return burrito;
         }
 
-
-        // adds together total tax and cost of selected items to show user their total cost
+        // adds together total tax and price of selected items to show user their total price
         public decimal CalculateSubTotal()
         {
             decimal subTotal = 0.00m;
@@ -60,13 +58,14 @@ namespace Restaurant_Menu_System_V3
             return Math.Round(subTotal, 2);
         }
 
-        // calculates total tax paid on total cost of items selected by user
+        // calculates total tax paid on total price of items selected by user
         public decimal CalculateTax(decimal subTotal)
         {
-            decimal taxRate = 0.085m;
+            decimal taxRate = 0.0815m;
             return Math.Round(subTotal * taxRate, 2);
         }
 
+        // calculate final total price for customer based on selected items and tax rate
         public decimal CalculateTotal(decimal subTotal, decimal tax)
         {
             return subTotal + tax;
