@@ -8,20 +8,40 @@ namespace Restaurant_Menu_System_V3
     // manages order input and options selection
     public class OrderInputAndOptions
     {
-        // Property to get and set the burrito choices
-        public List<MenuOption> BurritoChoices { get; private set; }
+        // property to store final entrée choices in a list to display at checkout
+        public List<List<MenuOption>> AllEntreeChoices { get; private set; }
+        // property to get and set the burrito choices as they are selected
+        public List<MenuOption> CurrentEntreeChoices { get; private set; }
         private CustomerReceipt _customerReceipt;
 
         // constructor initializes the BurritoChoices list
         public OrderInputAndOptions()
         {
-            BurritoChoices = new List<MenuOption>();
+            AllEntreeChoices = new List<List<MenuOption>>();
+            CurrentEntreeChoices = new List<MenuOption>();
+        }
+
+        // creates a new instance of entrée choices
+        public void StartNewBurrito()
+        {
+            CurrentEntreeChoices = new List<MenuOption>();
+        }
+
+        // adds all entrée choices to new list and clears current list
+        public void FinalizeEntree()
+        {
+            if (CurrentEntreeChoices.Any())
+            {
+                AllEntreeChoices.Add(new List<MenuOption>(CurrentEntreeChoices));
+                CurrentEntreeChoices.Clear();
+                //Console.WriteLine("Burrito finalized and added to order. Current total burritos: " + AllBurritoChoices.Count);
+            }
         }
 
         //set the CustomerReceipt instance enabling rolling total calculation
         public void SetCustomerReceipt(CustomerReceipt receipt)
         {
-            this._customerReceipt = receipt;
+            _customerReceipt = receipt;
         }
 
         // collects user input and verifies it is valid and within the provided range
@@ -98,7 +118,7 @@ namespace Restaurant_Menu_System_V3
 
             DisplayOrderOptions("ENTRÉE CHOICE: ", option);
             int choice = GetIntegerInput("Enter your entrée choice: ", 1, 2) - 1;
-            BurritoChoices.Insert(0, (option[choice]));
+            CurrentEntreeChoices.Insert(0, (option[choice]));
         }
 
         // prompts user to choose a tortilla
@@ -114,7 +134,7 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("TORTILLA CHOICE:", tortillaMenuOption);
             int tortillaChoice = GetIntegerInput("Enter your tortilla choice: ", 1, 3) - 1;
 
-            BurritoChoices.Add(tortillaMenuOption[tortillaChoice]);
+            CurrentEntreeChoices.Add(tortillaMenuOption[tortillaChoice]);
             Console.WriteLine($"You selected: {tortillaMenuOption[tortillaChoice].ItemName}.");
         }
 
@@ -132,7 +152,7 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("PROTEIN CHOICE:", proteinMenuOption);
             int proteinChoice = GetIntegerInput("Enter your protein choice: ", 1, 4) - 1;
 
-            BurritoChoices.Add(proteinMenuOption[proteinChoice]);
+            CurrentEntreeChoices.Add(proteinMenuOption[proteinChoice]);
             decimal rollingTotal = _customerReceipt.CalculateSubTotal();
             Console.WriteLine($"You selected: {proteinMenuOption[proteinChoice].ItemName}, Your new total is ${rollingTotal}");
 
@@ -145,7 +165,7 @@ namespace Restaurant_Menu_System_V3
                    new MenuOption() { ItemName = "X2 PROTEIN", Price = proteinMenuOption[proteinChoice].Price * 0.40m }
                 };
 
-                BurritoChoices.Add(doubleProteinMenuOption[0]);
+                CurrentEntreeChoices.Add(doubleProteinMenuOption[0]);
                 rollingTotal = _customerReceipt.CalculateSubTotal();
                 Console.WriteLine($"You have chosen double protein. Your new total is: ${rollingTotal}");
             }
@@ -165,7 +185,7 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("RICE CHOICE:", riceMenuOption);
             int riceChoice = GetIntegerInput("Enter your rice choice: ", 1, 4) - 1;
 
-            BurritoChoices.Add(riceMenuOption[riceChoice]);
+            CurrentEntreeChoices.Add(riceMenuOption[riceChoice]);
             Console.WriteLine($"You selected: {riceMenuOption[riceChoice].ItemName}.");
         }
 
@@ -183,7 +203,7 @@ namespace Restaurant_Menu_System_V3
             DisplayOrderOptions("BEAN CHOICE:", beanMenuOption);
             int beanChoice = GetIntegerInput("Enter your bean choice: ", 1, 4) - 1;
 
-            BurritoChoices.Add(beanMenuOption[beanChoice]);
+            CurrentEntreeChoices.Add(beanMenuOption[beanChoice]);
             Console.WriteLine($"You selected: {beanMenuOption[beanChoice].ItemName}.");
         }
 
@@ -207,7 +227,7 @@ namespace Restaurant_Menu_System_V3
                 DisplayOrderOptions("RICE CHOICE:", addonMenuOption);
                 int addonChoice = GetIntegerInput("Enter your add-on choice: ", 1, 8) - 1;
 
-                if (BurritoChoices.Contains(addonMenuOption[addonChoice]))
+                if (CurrentEntreeChoices.Contains(addonMenuOption[addonChoice]))
                 {
                     Console.WriteLine($"You have already selected {addonMenuOption[addonChoice].ItemName}. Please choose a different add-on.");
                 }
@@ -215,12 +235,12 @@ namespace Restaurant_Menu_System_V3
                 {
                     if (addonMenuOption[addonChoice].Price == 0.00m)
                     {
-                        BurritoChoices.Add(addonMenuOption[addonChoice]);
+                        CurrentEntreeChoices.Add(addonMenuOption[addonChoice]);
                         Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}.");
                     }
                     else
                     {
-                        BurritoChoices.Add(addonMenuOption[addonChoice]);
+                        CurrentEntreeChoices.Add(addonMenuOption[addonChoice]);
                         decimal rollingTotal = _customerReceipt.CalculateSubTotal();
                         Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}. For ${addonMenuOption[addonChoice].Price}. Your new total is ${rollingTotal}");
                     }
@@ -236,37 +256,37 @@ namespace Restaurant_Menu_System_V3
         // clears the previous entrée choice
         public void ClearEntreeChoice()
         {
-            BurritoChoices.RemoveAll(choice => choice.ItemName == "BOWL" || choice.ItemName == "BURRITO");
+            CurrentEntreeChoices.RemoveAll(choice => choice.ItemName == "BOWL" || choice.ItemName == "BURRITO");
         }
 
         // clears the previous tortilla choice
         public void ClearTortillaChoice()
         {
-            BurritoChoices.RemoveAll(choice => choice.ItemName.Contains("TORTILLA"));
+            CurrentEntreeChoices.RemoveAll(choice => choice.ItemName.Contains("TORTILLA"));
         }
 
         // clears the previous protein choice
         public void ClearProteinChoice()
         {
-            BurritoChoices.RemoveAll(choice => new[] { "STEAK", "PORK", "CHORIZO", "CHICKEN", "X2 PROTEIN" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[] { "STEAK", "PORK", "CHORIZO", "CHICKEN", "X2 PROTEIN" }.Contains(choice.ItemName));
         }
 
         // clears the previous rice choice
         public void ClearRiceChoice()
         {
-            BurritoChoices.RemoveAll(choice => new[] { "SPANISH RICE", "CILANTRO LIME RICE", "BROWN RICE", "NO RICE" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[] { "SPANISH RICE", "CILANTRO LIME RICE", "BROWN RICE", "NO RICE" }.Contains(choice.ItemName));
         }
 
         // clears the previous bean choice
         public void ClearBeanChoice()
         {
-            BurritoChoices.RemoveAll(choice => new[] { "BLACK BEANS", "PINTO BEANS", "REFRIED BEANS", "NO BEANS" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[] { "BLACK BEANS", "PINTO BEANS", "REFRIED BEANS", "NO BEANS" }.Contains(choice.ItemName));
         }
 
         // clears the previous add-on choices
         public void ClearAddonChoices()
         {
-            BurritoChoices.RemoveAll(choice => new[] { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[] { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" }.Contains(choice.ItemName));
         }
     }
 }

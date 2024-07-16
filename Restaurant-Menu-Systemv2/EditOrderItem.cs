@@ -13,7 +13,7 @@ namespace Restaurant_Menu_System_V3
 
         public EditOrderItem(OrderInputAndOptions orderchoice)
         {
-            this._orderChoice = orderchoice;
+            _orderChoice = orderchoice;
         }
 
         // prompts user to ask if they would like to edit their order

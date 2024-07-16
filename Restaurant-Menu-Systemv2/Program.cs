@@ -9,7 +9,7 @@ class Program
         OrderName customerName = new OrderName();
         customerName.GreetAndCollectName();
 
-        // create an instance of CustomerReceipt
+        // create an instance of OrderInputAndOptions and CustomerReceipt
         OrderInputAndOptions orderInputAndOptions = new OrderInputAndOptions();
         CustomerReceipt customerReceipt = new CustomerReceipt(orderInputAndOptions);
 
@@ -19,7 +19,8 @@ class Program
         // calls class and methods for creating customers order
         orderInputAndOptions.ChooseEntree();
 
-        if (!orderInputAndOptions.BurritoChoices.Any(option => option.ItemName == "BOWL"))
+        // if bowl is not selected, prompt user to choose a tortilla
+        if (!orderInputAndOptions.CurrentEntreeChoices.Any(option => option.ItemName == "BOWL"))
         {
             orderInputAndOptions.ChooseTortilla();
         }
@@ -33,11 +34,15 @@ class Program
         EditOrderItem orderEditor = new EditOrderItem(orderInputAndOptions);
         orderEditor.ShowOrderOptionsToEdit();
 
-        if (!orderInputAndOptions.BurritoChoices.Any(option => option.ItemName == "BOWL") && !orderInputAndOptions.BurritoChoices.Any(option => option.ItemName.Contains("TORTILLA")))
+        if (!orderInputAndOptions.CurrentEntreeChoices.Any(option => option.ItemName == "BOWL") && !orderInputAndOptions.CurrentEntreeChoices.Any(option => option.ItemName.Contains("TORTILLA")))
         {
-            Console.WriteLine("Please select the tortilla you would for your burrito.");
+            Console.WriteLine("Please select the tortilla you would like for your burrito.");
             orderInputAndOptions.ChooseTortilla();
         }
+
+        // add more entrées if the user wants to
+        MenuOptionAdder menuOptionAdder = new MenuOptionAdder(orderInputAndOptions, orderEditor);
+        menuOptionAdder.AddMoreEntrees();
 
         // displays user receipt
         customerReceipt.DisplayReceipt(customerName);

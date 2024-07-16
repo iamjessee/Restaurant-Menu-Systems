@@ -6,8 +6,40 @@ using System.Threading.Tasks;
 
 namespace Restaurant_Menu_System_V3
 {
-    internal class MenuOptionAdder
+    public class MenuOptionAdder
     {
+        private OrderInputAndOptions _orderChoice;
+        private EditOrderItem _editOrderItem;
 
+        // constructor to initialize the order choice and edit order item
+        public MenuOptionAdder(OrderInputAndOptions orderchoice, EditOrderItem editOrderItem)
+        {
+            _orderChoice = orderchoice;
+            _editOrderItem = editOrderItem;
+        }
+
+        // prompts user to add more entrées to their order
+        public void AddMoreEntrees()
+        {
+            while(_orderChoice.GetYesNoResponse("Would you like to add another item to your order?"))
+            {
+                _orderChoice.StartNewBurrito();
+
+                _orderChoice.ChooseEntree();
+                if (!_orderChoice.CurrentEntreeChoices.Any(option => option.ItemName == "BOWL"))
+                {
+                    _orderChoice.ChooseTortilla();
+                }
+                _orderChoice.ChooseProtein();
+                _orderChoice.ChooseRice();
+                _orderChoice.ChooseBeans();
+                _orderChoice.ChooseAddOns();
+
+                _editOrderItem.ShowOrderOptionsToEdit();
+
+                _orderChoice.FinalizeEntree();
+
+            }
+        }
     }
 }

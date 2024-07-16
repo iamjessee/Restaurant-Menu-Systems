@@ -18,7 +18,7 @@ namespace Restaurant_Menu_System_V3
         // Constructor to initialize the orderChoice instance
         public CustomerReceipt(OrderInputAndOptions orderchoice)
         {
-            this._orderChoice = orderchoice;
+            _orderChoice = orderchoice;
         }
 
         // generate order number
@@ -30,30 +30,50 @@ namespace Restaurant_Menu_System_V3
         // gets complete order selected by user and displays it in a readable itemized format for user
         public string GetOrderDescription()
         {
-            string burrito = "";
-            foreach (MenuOption item in _orderChoice.BurritoChoices)
+            string orderDescription = "";
+            int itemCount = 1;
+
+            foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
+            {
+                orderDescription += GetEntreeDescription(entreeChoices, itemCount);
+                itemCount++;
+            }
+
+            if (_orderChoice.CurrentEntreeChoices.Any())
+            {
+                orderDescription += GetEntreeDescription(_orderChoice.CurrentEntreeChoices, itemCount);
+            }
+            return orderDescription;
+        }
+        public string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
+        {
+            string description = $"\n--- Entrée {itemCount} ---";
+            foreach (MenuOption item in entreeChoices)
             {
                 if (item.Price == 0.00m)
                 {
-                    burrito += $"\n{item.ItemName.ToUpper()}";
+                    description += $"\n{item.ItemName.ToUpper()}";
                 }
                 else
                 {
-                    burrito += $"\n{item.ItemName.ToUpper() + "...." + item.Price.ToString("c")}";
+                    description += $"\n{item.ItemName.ToUpper() + "...." + item.Price.ToString("c")}";
                 }
             }
-            return burrito;
+            return description;
         }
-
         // adds together total tax and price of selected items to show user their total price
         public decimal CalculateSubTotal()
         {
             decimal subTotal = 0.00m;
 
-            foreach (MenuOption item in _orderChoice.BurritoChoices)
+            // calculate total for all completed burritos
+            foreach (var burritoChoices in _orderChoice.AllEntreeChoices)
             {
-                subTotal += item.Price;
+                subTotal += burritoChoices.Sum(item => item.Price);
             }
+
+            // add total for the current burrito being built
+            subTotal += _orderChoice.CurrentEntreeChoices.Sum(item => item.Price);
 
             return Math.Round(subTotal, 2);
         }
