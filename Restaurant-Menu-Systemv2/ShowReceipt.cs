@@ -1,107 +1,106 @@
-﻿namespace Restaurant_Menu_System_V3
+﻿namespace Restaurant_Menu_System_V3;
+
+public class CustomerReceipt
 {
-    public class CustomerReceipt
+    // calling field from another class to get items selected by user
+    private OrderInputAndOptions _orderChoice;
+
+    // private field to generate a random number to attach to order
+    private Random _rnd = new Random();
+
+    // Constructor to initialize the orderChoice instance
+    public CustomerReceipt(OrderInputAndOptions orderchoice)
     {
-        // calling field from another class to get items selected by user
-        private OrderInputAndOptions _orderChoice;
+        _orderChoice = orderchoice;
+    }
 
-        // private field to generate a random number to attach to order
-        private Random _rnd = new Random();
+    // generate order number
+    public int GenerateOrderID()
+    {
+        return _rnd.Next(1, 100);
+    }
 
-        // Constructor to initialize the orderChoice instance
-        public CustomerReceipt(OrderInputAndOptions orderchoice)
+    // gets complete order selected by user and displays it in a readable itemized format for user
+    public string GetOrderDescription()
+    {
+        string orderDescription = "";
+        int itemCount = 1;
+
+        foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
         {
-            _orderChoice = orderchoice;
+            orderDescription += GetEntreeDescription(entreeChoices, itemCount);
+            itemCount++;
         }
 
-        // generate order number
-        public int GenerateOrderID()
+        if (_orderChoice.CurrentEntreeChoices.Any())
         {
-            return _rnd.Next(1, 100);
+            orderDescription += GetEntreeDescription(_orderChoice.CurrentEntreeChoices, itemCount);
         }
+        return orderDescription;
+    }
 
-        // gets complete order selected by user and displays it in a readable itemized format for user
-        public string GetOrderDescription()
+    //creates a readable description for a list of entrée choices
+    public string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
+    {
+        string description = $"\n--- Entrée {itemCount} ---";
+        foreach (MenuOption item in entreeChoices)
         {
-            string orderDescription = "";
-            int itemCount = 1;
-
-            foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
+            if (item.Price == 0.00m)
             {
-                orderDescription += GetEntreeDescription(entreeChoices, itemCount);
-                itemCount++;
+                description += $"\n{item.ItemName.ToUpper()}";
             }
-
-            if (_orderChoice.CurrentEntreeChoices.Any())
+            else
             {
-                orderDescription += GetEntreeDescription(_orderChoice.CurrentEntreeChoices, itemCount);
+                description += $"\n{item.ItemName.ToUpper() + "...." + item.Price.ToString("c")}";
             }
-            return orderDescription;
         }
+        return description;
+    }
 
-        //creates a readable description for a list of entrée choices
-        public string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
+    // adds together total tax and price of selected items to show user their total price
+    public decimal CalculateSubTotal()
+    {
+        decimal subTotal = 0.00m;
+
+        // calculate total for all completed entrées
+        foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
         {
-            string description = $"\n--- Entrée {itemCount} ---";
-            foreach (MenuOption item in entreeChoices)
-            {
-                if (item.Price == 0.00m)
-                {
-                    description += $"\n{item.ItemName.ToUpper()}";
-                }
-                else
-                {
-                    description += $"\n{item.ItemName.ToUpper() + "...." + item.Price.ToString("c")}";
-                }
-            }
-            return description;
+            subTotal += entreeChoices.Sum(item => item.Price);
         }
 
-        // adds together total tax and price of selected items to show user their total price
-        public decimal CalculateSubTotal()
-        {
-            decimal subTotal = 0.00m;
+        // add total for the current entrée being built
+        subTotal += _orderChoice.CurrentEntreeChoices.Sum(item => item.Price);
 
-            // calculate total for all completed entrées
-            foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
-            {
-                subTotal += entreeChoices.Sum(item => item.Price);
-            }
+        return Math.Round(subTotal, 2);
+    }
 
-            // add total for the current entrée being built
-            subTotal += _orderChoice.CurrentEntreeChoices.Sum(item => item.Price);
+    // calculates total tax paid on total price of items selected by user
+    public decimal CalculateTax(decimal subTotal)
+    {
+        decimal taxRate = 0.0815m;
+        return Math.Round(subTotal * taxRate, 2);
+    }
 
-            return Math.Round(subTotal, 2);
-        }
+    // calculate final total price for customer based on selected items and tax rate
+    public decimal CalculateTotal(decimal subTotal, decimal tax)
+    {
+        return subTotal + tax;
+    }
 
-        // calculates total tax paid on total price of items selected by user
-        public decimal CalculateTax(decimal subTotal)
-        {
-            decimal taxRate = 0.0815m;
-            return Math.Round(subTotal * taxRate, 2);
-        }
+    // displays full receipt to user
+    public void DisplayReceipt(OrderName ordername)
+    {
+        int orderId = GenerateOrderID();
+        string orderDescription = GetOrderDescription();
+        decimal subTotal = CalculateSubTotal();
+        decimal tax = CalculateTax(subTotal);
+        decimal total = CalculateTotal(subTotal, tax);
 
-        // calculate final total price for customer based on selected items and tax rate
-        public decimal CalculateTotal(decimal subTotal, decimal tax)
-        {
-            return subTotal + tax;
-        }
-
-        // displays full receipt to user
-        public void DisplayReceipt(OrderName ordername)
-        {
-            int orderId = GenerateOrderID();
-            string orderDescription = GetOrderDescription();
-            decimal subTotal = CalculateSubTotal();
-            decimal tax = CalculateTax(subTotal);
-            decimal total = CalculateTotal(subTotal, tax);
-
-            Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
-            Console.WriteLine($"\nOrder ID: {orderId}");
-            Console.WriteLine(orderDescription);
-            Console.WriteLine($"\nSUBTOTAL: ${subTotal}");
-            Console.WriteLine($"TAX: ${tax}");
-            Console.WriteLine($"TOTAL: ${total}");
-        }
+        Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
+        Console.WriteLine($"\nOrder ID: {orderId}");
+        Console.WriteLine(orderDescription);
+        Console.WriteLine($"\nSUBTOTAL: ${subTotal}");
+        Console.WriteLine($"TAX: ${tax}");
+        Console.WriteLine($"TOTAL: ${total}");
     }
 }
