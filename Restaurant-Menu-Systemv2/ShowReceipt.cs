@@ -6,7 +6,7 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
     private readonly OrderInputAndOptions _orderChoice = orderChoice;
 
     // generate order number
-    public int GenerateOrderID() => Random.Shared.Next(1, 100);
+    public static int GenerateOrderID() => Random.Shared.Next(1, 100);
 
     // gets complete order selected by user and displays it in a readable itemized format for user
     public string GetOrderDescription()
@@ -28,7 +28,7 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
     }
 
     //creates a readable description for a list of entrée choices
-    public string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
+    public static string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
     {
         string description = $"\n--- Entrée {itemCount} ---";
         foreach (MenuOption item in entreeChoices)
@@ -63,20 +63,14 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
     }
 
     // calculates total tax paid on total price of items selected by user
-    public decimal CalculateTax(decimal subTotal)
-    {
-        decimal taxRate = 0.0815m;
-        return Math.Round(subTotal * taxRate, 2);
-    }
+    const decimal taxRate = 0.0815m;
+    public static decimal CalculateTax(decimal subTotal) => Math.Round(subTotal * taxRate, 2);
 
     // calculate final total price for customer based on selected items and tax rate
-    public decimal CalculateTotal(decimal subTotal, decimal tax)
-    {
-        return subTotal + tax;
-    }
+    public static decimal CalculateTotal(decimal subTotal, decimal tax) => subTotal + tax;
 
     // displays full receipt to user
-    public void DisplayReceipt(OrderName ordername)
+    public void DisplayReceipt(OrderName orderName)
     {
         int orderId = GenerateOrderID();
         string orderDescription = GetOrderDescription();
@@ -84,7 +78,7 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
         decimal tax = CalculateTax(subTotal);
         decimal total = CalculateTotal(subTotal, tax);
 
-        Console.WriteLine($"\nThanks {ordername.Name}, your order is complete.");
+        Console.WriteLine($"\nThanks {orderName.Name}, your order is complete.");
         Console.WriteLine($"\nOrder ID: {orderId}");
         Console.WriteLine(orderDescription);
         Console.WriteLine($"\nSUBTOTAL: ${subTotal}");
