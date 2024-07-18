@@ -2,7 +2,7 @@
 
 namespace Restaurant_Menu_System_V3;
 
-public class OrderName
+public partial class OrderName
 {
     // Property to get and set the name
     public string Name { get; private set; } = string.Empty;
@@ -31,8 +31,8 @@ public class OrderName
     }
 
     // Validates the user's name to ensure it contains only alphabetical characters and spaces, and is between 1 and 26 characters long
-    public bool IsValidName(string name)
-    {
-        return Regex.IsMatch(name, @"^[a-zA-Z\s]{1,26}$");
-    }
+    public static bool IsValidName(string name) => MyRegex().IsMatch(name);
+
+    [GeneratedRegex(@"^[a-zA-Z\s]{1,26}$")]
+    private static partial Regex MyRegex();
 }
