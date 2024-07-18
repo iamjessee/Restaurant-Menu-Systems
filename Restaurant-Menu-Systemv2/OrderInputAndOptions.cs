@@ -10,7 +10,7 @@
         public List<MenuOption> CurrentEntreeChoices { get; private set; } = [];
 
         // private field to store the customer's receipt details for calculating and displaying the rolling total
-        private CustomerReceipt _customerReceipt;
+        private CustomerReceipt? _customerReceipt;
 
         // creates a new instance of entrée choices
         public void StartNewBurrito() => CurrentEntreeChoices = [];
@@ -102,7 +102,7 @@
 
             DisplayOrderOptions("ENTRÉE CHOICE: ", option);
             int choice = GetIntegerInput("Enter your entrée choice: ", 1, 2) - 1;
-            CurrentEntreeChoices.Insert(0, (option[choice]));
+            CurrentEntreeChoices.Insert(0, option[choice]);
         }
 
         // prompts user to choose a tortilla
@@ -137,7 +137,7 @@
             int proteinChoice = GetIntegerInput("Enter your protein choice: ", 1, 4) - 1;
 
             CurrentEntreeChoices.Add(proteinMenuOption[proteinChoice]);
-            decimal rollingTotal = _customerReceipt.CalculateSubTotal();
+            decimal rollingTotal = _customerReceipt?.CalculateSubTotal() ?? throw new Exception("Can't choose protein until customerReceipt is done");
             Console.WriteLine($"You selected: {proteinMenuOption[proteinChoice].ItemName}, Your new total is ${rollingTotal}");
 
             decimal doubleProteinPrice = Math.Round(proteinMenuOption[proteinChoice].Price * 0.40m, 2);
@@ -225,7 +225,7 @@
                     else
                     {
                         CurrentEntreeChoices.Add(addonMenuOption[addonChoice]);
-                        decimal rollingTotal = _customerReceipt.CalculateSubTotal();
+                        decimal rollingTotal = _customerReceipt?.CalculateSubTotal() ?? throw new Exception("Can't choose protein until customerReceipt is done");
                         Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}. For ${addonMenuOption[addonChoice].Price}. Your new total is ${rollingTotal}");
                     }
                 }
