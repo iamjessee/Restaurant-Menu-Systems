@@ -1,4 +1,4 @@
-﻿using Restaurant_Menu_System_V3;
+﻿namespace Restaurant_Menu_System_V3;
 
 public static class Program
 {
