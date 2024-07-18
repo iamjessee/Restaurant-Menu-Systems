@@ -20,7 +20,7 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
             itemCount++;
         }
 
-        if (_orderChoice.CurrentEntreeChoices.Any())
+        if (_orderChoice.CurrentEntreeChoices.Count != 0)
         {
             orderDescription += GetEntreeDescription(_orderChoice.CurrentEntreeChoices, itemCount);
         }
