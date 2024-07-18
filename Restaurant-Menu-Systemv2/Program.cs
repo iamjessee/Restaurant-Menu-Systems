@@ -44,6 +44,6 @@ public static class Program
         menuOptionAdder.AddMoreEntrees();
 
         // displays user receipt
-        customerReceipt.DisplayReceipt(customerName);
+        customerReceipt.DisplayReceipt();
     }
 }
