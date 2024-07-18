@@ -14,10 +14,10 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
         string orderDescription = "";
         int itemCount = 1;
 
+
         foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
         {
-            orderDescription += GetEntreeDescription(entreeChoices, itemCount);
-            itemCount++;
+            orderDescription += GetEntreeDescription(entreeChoices, itemCount++);
         }
 
         if (_orderChoice.CurrentEntreeChoices.Count != 0)
