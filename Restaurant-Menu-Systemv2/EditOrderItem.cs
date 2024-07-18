@@ -14,7 +14,7 @@ public class EditOrderItem
     // displays options for user to edit and takes them back to their spot in the menu
     public void ShowOrderOptionsToEdit()
     {
-        if (!_orderChoice.GetYesNoResponse("Would you like to edit your order?"))
+        if (!OrderInputAndOptions.GetYesNoResponse("Would you like to edit your order?"))
         {
             Console.WriteLine("No changes made to the order.");
             return;
@@ -42,11 +42,11 @@ public class EditOrderItem
             new MenuOption() { ItemName = "Edit Add-On Choices" },
         };
 
-        _orderChoice.DisplayOrderOptions("CHOOSE WHICH MENU ITEM YOU WOULD LIKE TO EDIT:", options);
+        OrderInputAndOptions.DisplayOrderOptions("CHOOSE WHICH MENU ITEM YOU WOULD LIKE TO EDIT:", options);
 
         while (true)
         {
-            int choice = _orderChoice.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
+            int choice = OrderInputAndOptions.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
 
             // Clear previous selection based on the choice
             switch (choice)
@@ -79,7 +79,7 @@ public class EditOrderItem
 
             orderOptions[choice]();
 
-            if (!_orderChoice.GetYesNoResponse("Would you like to make another edit?"))
+            if (!OrderInputAndOptions.GetYesNoResponse("Would you like to make another edit?"))
             {
                 break;
             }
