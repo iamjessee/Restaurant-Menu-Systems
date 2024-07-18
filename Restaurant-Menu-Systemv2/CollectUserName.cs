@@ -1,6 +1,6 @@
 ﻿namespace Restaurant_Menu_System_V3;
 
-public class OrderName
+public class CollectUserName
 {
     // Property to get and set the name
     public string? Name { get; private set; }
