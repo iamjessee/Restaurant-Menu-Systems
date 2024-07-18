@@ -78,11 +78,11 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
         decimal tax = CalculateTax(subTotal);
         decimal total = CalculateTotal(subTotal, tax);
 
-        Console.WriteLine($"\nThanks {orderName.Name}, your order is complete.");
-        Console.WriteLine($"\nOrder ID: {orderId}");
-        Console.WriteLine(orderDescription);
-        Console.WriteLine($"\nSUBTOTAL: ${subTotal}");
-        Console.WriteLine($"TAX: ${tax}");
-        Console.WriteLine($"TOTAL: ${total}");
+        WriteLine($"\nThanks {orderName.Name}, your order is complete.");
+        WriteLine($"\nOrder ID: {orderId}");
+        WriteLine(orderDescription);
+        WriteLine($"\nSUBTOTAL: ${subTotal}");
+        WriteLine($"TAX: ${tax}");
+        WriteLine($"TOTAL: ${total}");
     }
 }

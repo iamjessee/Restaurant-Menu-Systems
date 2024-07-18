@@ -9,14 +9,14 @@ internal static partial class OrderHelper
     {
         while (true)
         {
-            Console.Write(message);
-            if (!int.TryParse(Console.ReadLine(), out int input))
+            Write(message);
+            if (!int.TryParse(ReadLine(), out int input))
             {
-                Console.WriteLine("That is not a number...Please enter one of the provided numbers");
+                WriteLine("That is not a number...Please enter one of the provided numbers");
             }
             else if (input < minValue || input > maxValue)
             {
-                Console.WriteLine("Error! Please enter one of the provided numbers");
+                WriteLine("Error! Please enter one of the provided numbers");
             }
             else
             {
@@ -28,17 +28,17 @@ internal static partial class OrderHelper
     // displays menu options with their prices
     public static void DisplayOrderOptions(string orderType, MenuOption[] options)
     {
-        Console.WriteLine($"\n{orderType}");
+        WriteLine($"\n{orderType}");
         int itemCount = 1;
         foreach (MenuOption item in options)
         {
             if (item.Price == 0.00m)
             {
-                Console.WriteLine($"{itemCount}. {item.ItemName.ToUpper()}");
+                WriteLine($"{itemCount}. {item.ItemName.ToUpper()}");
             }
             else
             {
-                Console.WriteLine($"{itemCount}. {item.ItemName.ToUpper()}....{item.Price.ToString("c")}");
+                WriteLine($"{itemCount}. {item.ItemName.ToUpper()}....{item.Price.ToString("c")}");
             }
             itemCount++;
         }
@@ -49,8 +49,8 @@ internal static partial class OrderHelper
     {
         while (true)
         {
-            Console.WriteLine($"{question}(Y/N)");
-            string userResponse = Console.ReadLine() ?? string.Empty;
+            WriteLine($"{question}(Y/N)");
+            string userResponse = ReadLine() ?? string.Empty;
 
             if (userResponse.Equals("Y", StringComparison.OrdinalIgnoreCase))
             {
@@ -60,7 +60,7 @@ internal static partial class OrderHelper
             {
                 return false;
             }
-            Console.WriteLine("Please enter Y/N to continue.");
+            WriteLine("Please enter Y/N to continue.");
         }
     }
 

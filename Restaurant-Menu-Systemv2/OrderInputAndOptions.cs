@@ -56,7 +56,7 @@
             int tortillaChoice = GetIntegerInput("Enter your tortilla choice: ", 1, 3) - 1;
 
             CurrentEntreeChoices.Add(tortillaMenuOption[tortillaChoice]);
-            Console.WriteLine($"You selected: {tortillaMenuOption[tortillaChoice].ItemName}.");
+            WriteLine($"You selected: {tortillaMenuOption[tortillaChoice].ItemName}.");
         }
 
         // prompts user to choose a protein
@@ -75,7 +75,7 @@
 
             CurrentEntreeChoices.Add(proteinMenuOption[proteinChoice]);
             decimal rollingTotal = _customerReceipt?.CalculateSubTotal() ?? throw new Exception("Can't choose protein until customerReceipt is done");
-            Console.WriteLine($"You selected: {proteinMenuOption[proteinChoice].ItemName}, Your new total is ${rollingTotal}");
+            WriteLine($"You selected: {proteinMenuOption[proteinChoice].ItemName}, Your new total is ${rollingTotal}");
 
             decimal doubleProteinPrice = Math.Round(proteinMenuOption[proteinChoice].Price * 0.40m, 2);
 
@@ -88,7 +88,7 @@
 
                 CurrentEntreeChoices.Add(doubleProteinMenuOption[0]);
                 rollingTotal = _customerReceipt.CalculateSubTotal();
-                Console.WriteLine($"You have chosen double protein. Your new total is: ${rollingTotal}");
+                WriteLine($"You have chosen double protein. Your new total is: ${rollingTotal}");
             }
         }
 
@@ -107,7 +107,7 @@
             int riceChoice = GetIntegerInput("Enter your rice choice: ", 1, 4) - 1;
 
             CurrentEntreeChoices.Add(riceMenuOption[riceChoice]);
-            Console.WriteLine($"You selected: {riceMenuOption[riceChoice].ItemName}.");
+            WriteLine($"You selected: {riceMenuOption[riceChoice].ItemName}.");
         }
 
         // prompts user to choose a bean option
@@ -125,7 +125,7 @@
             int beanChoice = GetIntegerInput("Enter your bean choice: ", 1, 4) - 1;
 
             CurrentEntreeChoices.Add(beanMenuOption[beanChoice]);
-            Console.WriteLine($"You selected: {beanMenuOption[beanChoice].ItemName}.");
+            WriteLine($"You selected: {beanMenuOption[beanChoice].ItemName}.");
         }
 
         // prompts user to choose add-ons
@@ -150,20 +150,20 @@
 
                 if (CurrentEntreeChoices.Contains(addonMenuOption[addonChoice]))
                 {
-                    Console.WriteLine($"You have already selected {addonMenuOption[addonChoice].ItemName}. Please choose a different add-on.");
+                    WriteLine($"You have already selected {addonMenuOption[addonChoice].ItemName}. Please choose a different add-on.");
                 }
                 else
                 {
                     if (addonMenuOption[addonChoice].Price == 0.00m)
                     {
                         CurrentEntreeChoices.Add(addonMenuOption[addonChoice]);
-                        Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}.");
+                        WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}.");
                     }
                     else
                     {
                         CurrentEntreeChoices.Add(addonMenuOption[addonChoice]);
                         decimal rollingTotal = _customerReceipt?.CalculateSubTotal() ?? throw new Exception("Can't choose protein until customerReceipt is done");
-                        Console.WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}. For ${addonMenuOption[addonChoice].Price}. Your new total is ${rollingTotal}");
+                        WriteLine($"You selected: {addonMenuOption[addonChoice].ItemName}. For ${addonMenuOption[addonChoice].Price}. Your new total is ${rollingTotal}");
                     }
                 }
             }

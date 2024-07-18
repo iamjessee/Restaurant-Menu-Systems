@@ -8,19 +8,19 @@ public class OrderName
     // Greets the user and prompts them to enter a name for the order
     public void GreetAndCollectName()
     {
-        Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
+        WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
 
         while (true)
         {
-            Console.WriteLine("Please enter a name for this order: ");
-            if (IsValidName(Name = Console.ReadLine()))
+            WriteLine("Please enter a name for this order: ");
+            if (IsValidName(Name = ReadLine()))
             {
-                Console.WriteLine($"Welcome {Name} Please use the numbers provided when making a selection.");
+                WriteLine($"Welcome {Name} Please use the numbers provided when making a selection.");
                 break;
             }
             else
             {
-                Console.WriteLine("Enter a name using only alphabetical characters and less than 26 characters");
+                WriteLine("Enter a name using only alphabetical characters and less than 26 characters");
             }
         }
     }
