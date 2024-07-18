@@ -9,6 +9,7 @@ namespace Restaurant_Menu_System_V3
 {
     public class EditOrderItem
     {
+        // private field to store the order choices, allowing for edits to the current order
         private OrderInputAndOptions _orderChoice;
 
         public EditOrderItem(OrderInputAndOptions orderchoice)
@@ -25,7 +26,9 @@ namespace Restaurant_Menu_System_V3
                 Console.WriteLine("No changes made to the order.");
                 return;
             }
-
+            // to do - user is prompted to edit their tortilla choice even if they have selected a bowl and can add a tortilla to order.
+            // need to resolve this issue at some point after building out rest of application.
+            // need to add ability to completely remove entree and choices from list if user changes their mind.
             Action[] orderOptions =
             {
                _orderChoice.ChooseEntree,

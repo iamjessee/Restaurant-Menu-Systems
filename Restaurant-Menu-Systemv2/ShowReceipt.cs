@@ -13,6 +13,8 @@ namespace Restaurant_Menu_System_V3
     {
         // calling field from another class to get items selected by user
         private OrderInputAndOptions _orderChoice;
+
+        // private field to generate a random number to attach to order
         private Random _rnd = new Random();
 
         // Constructor to initialize the orderChoice instance
@@ -45,6 +47,8 @@ namespace Restaurant_Menu_System_V3
             }
             return orderDescription;
         }
+
+        //creates a readable description for a list of entrée choices
         public string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
         {
             string description = $"\n--- Entrée {itemCount} ---";
@@ -61,18 +65,19 @@ namespace Restaurant_Menu_System_V3
             }
             return description;
         }
+
         // adds together total tax and price of selected items to show user their total price
         public decimal CalculateSubTotal()
         {
             decimal subTotal = 0.00m;
 
-            // calculate total for all completed burritos
-            foreach (var burritoChoices in _orderChoice.AllEntreeChoices)
+            // calculate total for all completed entrées
+            foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
             {
-                subTotal += burritoChoices.Sum(item => item.Price);
+                subTotal += entreeChoices.Sum(item => item.Price);
             }
 
-            // add total for the current burrito being built
+            // add total for the current entrée being built
             subTotal += _orderChoice.CurrentEntreeChoices.Sum(item => item.Price);
 
             return Math.Round(subTotal, 2);

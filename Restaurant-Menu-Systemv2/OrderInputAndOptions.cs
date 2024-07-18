@@ -10,8 +10,11 @@ namespace Restaurant_Menu_System_V3
     {
         // property to store final entrée choices in a list to display at checkout
         public List<List<MenuOption>> AllEntreeChoices { get; private set; }
+
         // property to get and set the burrito choices as they are selected
         public List<MenuOption> CurrentEntreeChoices { get; private set; }
+
+        // private field to store the customer's receipt details for calculating and displaying the rolling total
         private CustomerReceipt _customerReceipt;
 
         // constructor initializes the BurritoChoices list
@@ -34,7 +37,6 @@ namespace Restaurant_Menu_System_V3
             {
                 AllEntreeChoices.Add(new List<MenuOption>(CurrentEntreeChoices));
                 CurrentEntreeChoices.Clear();
-                //Console.WriteLine("Burrito finalized and added to order. Current total burritos: " + AllBurritoChoices.Count);
             }
         }
 
@@ -108,6 +110,7 @@ namespace Restaurant_Menu_System_V3
             } while (true);
         }
 
+        // prompts user to pick their main entrée choice
         public void ChooseEntree()
         {
             MenuOption[] option =
@@ -268,25 +271,54 @@ namespace Restaurant_Menu_System_V3
         // clears the previous protein choice
         public void ClearProteinChoice()
         {
-            CurrentEntreeChoices.RemoveAll(choice => new[] { "STEAK", "PORK", "CHORIZO", "CHICKEN", "X2 PROTEIN" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[] 
+            {
+                "STEAK",
+                "PORK",
+                "CHORIZO",
+                "CHICKEN",
+                "X2 PROTEIN"
+            }.Contains(choice.ItemName));
         }
 
         // clears the previous rice choice
         public void ClearRiceChoice()
         {
-            CurrentEntreeChoices.RemoveAll(choice => new[] { "SPANISH RICE", "CILANTRO LIME RICE", "BROWN RICE", "NO RICE" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[]
+            {
+                "SPANISH RICE",
+                "CILANTRO LIME RICE",
+                "BROWN RICE",
+                "NO RICE"
+            }.Contains(choice.ItemName));
         }
 
         // clears the previous bean choice
         public void ClearBeanChoice()
         {
-            CurrentEntreeChoices.RemoveAll(choice => new[] { "BLACK BEANS", "PINTO BEANS", "REFRIED BEANS", "NO BEANS" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[]
+            {
+                "BLACK BEANS",
+                "PINTO BEANS",
+                "REFRIED BEANS",
+                "NO BEANS"
+            }.Contains(choice.ItemName));
         }
 
         // clears the previous add-on choices
         public void ClearAddonChoices()
         {
-            CurrentEntreeChoices.RemoveAll(choice => new[] { "GRILLED CORN", "LETTUCE", "ONIONS", "SOUR CREAM", "POTATOES", "CHEESE", "QUESO", "GUACAMOLE" }.Contains(choice.ItemName));
+            CurrentEntreeChoices.RemoveAll(choice => new[]
+            {
+                "GRILLED CORN",
+                "LETTUCE",
+                "ONIONS",
+                "SOUR CREAM",
+                "POTATOES",
+                "CHEESE",
+                "QUESO",
+                "GUACAMOLE"
+            }.Contains(choice.ItemName));
         }
     }
 }

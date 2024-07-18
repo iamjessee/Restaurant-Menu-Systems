@@ -39,6 +39,7 @@ class Program
             Console.WriteLine("Please select the tortilla you would like for your burrito.");
             orderInputAndOptions.ChooseTortilla();
         }
+        orderInputAndOptions.FinalizeEntree();
 
         // add more entrées if the user wants to
         MenuOptionAdder menuOptionAdder = new MenuOptionAdder(orderInputAndOptions, orderEditor);
