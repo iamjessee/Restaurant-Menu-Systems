@@ -5,15 +5,11 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
     // calling field from another class to get items selected by user
     private readonly OrderInputAndOptions _orderChoice = orderChoice;
 
-    // generate order number
-    public static int GenerateOrderID() => Random.Shared.Next(1, 100);
-
     // gets complete order selected by user and displays it in a readable itemized format for user
     public string GetOrderDescription()
     {
         string orderDescription = "";
         int itemCount = 1;
-
 
         foreach (var entreeChoices in _orderChoice.AllEntreeChoices)
         {
@@ -58,13 +54,6 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
 
         return Math.Round(subTotal, 2);
     }
-
-    // calculates total tax paid on total price of items selected by user
-    const decimal taxRate = 0.0815m;
-    public static decimal CalculateTax(decimal subTotal) => Math.Round(subTotal * taxRate, 2);
-
-    // calculate final total price for customer based on selected items and tax rate
-    public static decimal CalculateTotal(decimal subTotal, decimal tax) => subTotal + tax;
 
     // displays full receipt to user
     public void DisplayReceipt(OrderName orderName)

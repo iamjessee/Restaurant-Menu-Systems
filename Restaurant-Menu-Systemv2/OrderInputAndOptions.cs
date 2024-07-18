@@ -176,7 +176,6 @@
         // clears the previous tortilla choice
         public void ClearTortillaChoice() => CurrentEntreeChoices.RemoveAll(choice => choice.ItemName.Contains("TORTILLA"));
 
-
         // clears the previous protein choice
         private static readonly string[] proteinOptions =
         [
@@ -187,7 +186,6 @@
             "X2 PROTEIN"
         ];
         public void ClearProteinChoice() => CurrentEntreeChoices.RemoveAll(choice => proteinOptions.Contains(choice.ItemName));
-
 
         // clears the previous rice choice
         private static readonly string[] richOptions =

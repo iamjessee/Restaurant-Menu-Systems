@@ -69,4 +69,14 @@ internal static partial class OrderHelper
 
     [GeneratedRegex(@"^[a-zA-Z\s]{1,26}$")]
     private static partial Regex MyRegex();
+
+    // calculates total tax paid on total price of items selected by user
+    const decimal _taxRate = 0.0815m;
+    public static decimal CalculateTax(decimal subTotal) => Math.Round(subTotal * _taxRate, 2);
+
+    // calculate final total price for customer based on selected items and tax rate
+    public static decimal CalculateTotal(decimal subTotal, decimal tax) => subTotal + tax;
+
+    // generate order number
+    public static int GenerateOrderID() => Random.Shared.Next(1, 100);
 }
