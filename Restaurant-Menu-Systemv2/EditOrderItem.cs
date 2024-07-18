@@ -1,4 +1,6 @@
-﻿namespace Restaurant_Menu_System_V3;
+﻿using Restaurant_Menu_System_V3.Model;
+
+namespace Restaurant_Menu_System_V3;
 
 public class EditOrderItem(OrderInputAndOptions orderChoice)
 {

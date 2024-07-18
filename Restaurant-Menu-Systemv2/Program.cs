@@ -5,8 +5,7 @@ public static class Program
     private static void Main()
     {
         // calls class and methods for greeting user and collecting name for order
-        OrderName customerName = new();
-        customerName.GreetAndCollectName();
+        UserName.GreetAndCollectName();
 
         // create an instance of OrderInputAndOptions and CustomerReceipt
         OrderInputAndOptions orderInputAndOptions = new();

@@ -1,12 +1,12 @@
 ﻿namespace Restaurant_Menu_System_V3;
 
-public class CollectUserName
+public static class UserName
 {
     // Property to get and set the name
-    public string? Name { get; private set; }
+    public static string? Name { get; private set; }
 
     // Greets the user and prompts them to enter a name for the order
-    public void GreetAndCollectName()
+    public static void GreetAndCollectName()
     {
         WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
 

@@ -58,7 +58,7 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
     }
 
     // displays full receipt to user
-    public void DisplayReceipt(CollectUserName orderName)
+    public void DisplayReceipt()
     {
         int orderId = GenerateOrderID();
         string orderDescription = GetOrderDescription();
@@ -66,7 +66,7 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
         decimal tax = CalculateTax(subTotal);
         decimal total = CalculateTotal(subTotal, tax);
 
-        WriteLine($"\nThanks {orderName.Name}, your order is complete.");
+        WriteLine($"\nThanks {UserName.Name}, your order is complete.");
         WriteLine($"\nOrder ID: {orderId}");
         WriteLine(orderDescription);
         WriteLine($"\nSUBTOTAL: ${subTotal}");

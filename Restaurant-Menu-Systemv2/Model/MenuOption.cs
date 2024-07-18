@@ -1,4 +1,4 @@
-﻿namespace Restaurant_Menu_System_V3;
+﻿namespace Restaurant_Menu_System_V3.Model;
 
 public class MenuOption
 {
