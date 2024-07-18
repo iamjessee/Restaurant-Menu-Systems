@@ -4,14 +4,8 @@ namespace Restaurant_Menu_System_V3;
 
 public class OrderName
 {
-    private string _name;
-
     // Property to get and set the name
-    public string Name
-    {
-        get { return _name; }
-        private set { _name = value; }
-    }
+    public string Name { get; private set; } = string.Empty;
 
     // Greets the user and prompts them to enter a name for the order
     public void GreetAndCollectName()
@@ -25,8 +19,8 @@ public class OrderName
 
             if (IsValidName(input))
             {
-                _name = input;
-                Console.WriteLine($"Welcome {_name} Please use the numbers provided when making a selection.");
+                Name = input;
+                Console.WriteLine($"Welcome {Name} Please use the numbers provided when making a selection.");
                 break;
             }
             else
