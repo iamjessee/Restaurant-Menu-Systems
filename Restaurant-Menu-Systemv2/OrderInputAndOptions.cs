@@ -160,10 +160,10 @@
         {
             MenuOption[] riceMenuOption =
             [
-                new MenuOption() { ItemName = "SPANISH RICE", Price = 0.00m },
+                new MenuOption() { ItemName = "SPANISH RICE",       Price = 0.00m },
                 new MenuOption() { ItemName = "CILANTRO LIME RICE", Price = 0.00m },
-                new MenuOption() { ItemName = "BROWN RICE", Price = 0.00m },
-                new MenuOption() { ItemName = "NO RICE", Price = 0.00m }
+                new MenuOption() { ItemName = "BROWN RICE",         Price = 0.00m },
+                new MenuOption() { ItemName = "NO RICE",            Price = 0.00m }
             ];
 
             DisplayOrderOptions("RICE CHOICE:", riceMenuOption);
@@ -178,10 +178,10 @@
         {
             MenuOption[] beanMenuOption =
             [
-                new MenuOption() { ItemName = "BLACK BEANS", Price = 0.00m },
-                new MenuOption() { ItemName = "PINTO BEANS", Price = 0.00m },
+                new MenuOption() { ItemName = "BLACK BEANS",   Price = 0.00m },
+                new MenuOption() { ItemName = "PINTO BEANS",   Price = 0.00m },
                 new MenuOption() { ItemName = "REFRIED BEANS", Price = 0.00m },
-                new MenuOption() { ItemName = "NO BEANS", Price = 0.00m }
+                new MenuOption() { ItemName = "NO BEANS",      Price = 0.00m }
             ];
 
             DisplayOrderOptions("BEAN CHOICE:", beanMenuOption);
@@ -197,13 +197,13 @@
             MenuOption[] addonMenuOption =
             [
                 new MenuOption() { ItemName = "GRILLED CORN", Price = 0.00m },
-                new MenuOption() { ItemName = "LETTUCE", Price = 0.00m },
-                new MenuOption() { ItemName = "ONIONS", Price = 0.00m },
-                new MenuOption() { ItemName = "SOUR CREAM", Price = 0.00m },
-                new MenuOption() { ItemName = "POTATOES", Price = 0.00m },
-                new MenuOption() { ItemName = "CHEESE", Price = 0.00m },
-                new MenuOption() { ItemName = "QUESO", Price = 1.60m },
-                new MenuOption() { ItemName = "GUACAMOLE",Price = 2.65m },
+                new MenuOption() { ItemName = "LETTUCE",      Price = 0.00m },
+                new MenuOption() { ItemName = "ONIONS",       Price = 0.00m },
+                new MenuOption() { ItemName = "SOUR CREAM",   Price = 0.00m },
+                new MenuOption() { ItemName = "POTATOES",     Price = 0.00m },
+                new MenuOption() { ItemName = "CHEESE",       Price = 0.00m },
+                new MenuOption() { ItemName = "QUESO",        Price = 1.60m },
+                new MenuOption() { ItemName = "GUACAMOLE",    Price = 2.65m },
             ];
 
             do
