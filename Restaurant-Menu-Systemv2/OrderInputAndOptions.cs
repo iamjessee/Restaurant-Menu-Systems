@@ -74,13 +74,13 @@
             while (true)
             {
                 Console.WriteLine($"{question}(Y/N)");
-                string userResponse = Console.ReadLine().ToUpper();
+                string userResponse = Console.ReadLine();
 
-                if (userResponse == "Y")
+                if (userResponse.Equals("Y", StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
-                else if (userResponse == "N")
+                else if (userResponse.Equals("N", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
