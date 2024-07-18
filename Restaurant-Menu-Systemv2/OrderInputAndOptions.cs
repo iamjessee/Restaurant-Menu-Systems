@@ -1,9 +1,4 @@
-﻿using System.ComponentModel.Design;
-using System.Linq;
-using System.Numerics;
-using System.Xml.Linq;
-
-namespace Restaurant_Menu_System_V3
+﻿namespace Restaurant_Menu_System_V3
 {
     // manages order input and options selection
     public class OrderInputAndOptions
@@ -271,7 +266,7 @@ namespace Restaurant_Menu_System_V3
         // clears the previous protein choice
         public void ClearProteinChoice()
         {
-            CurrentEntreeChoices.RemoveAll(choice => new[] 
+            CurrentEntreeChoices.RemoveAll(choice => new[]
             {
                 "STEAK",
                 "PORK",

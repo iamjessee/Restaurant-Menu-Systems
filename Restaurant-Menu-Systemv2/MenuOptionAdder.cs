@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Restaurant_Menu_System_V3
+﻿namespace Restaurant_Menu_System_V3
 {
     public class MenuOptionAdder
     {
@@ -24,7 +18,7 @@ namespace Restaurant_Menu_System_V3
         // prompts user to add more entrées to their order
         public void AddMoreEntrees()
         {
-            while(_orderChoice.GetYesNoResponse("Would you like to add another item to your order?"))
+            while (_orderChoice.GetYesNoResponse("Would you like to add another item to your order?"))
             {
                 _orderChoice.StartNewBurrito();
 
@@ -41,7 +35,6 @@ namespace Restaurant_Menu_System_V3
                 _editOrderItem.ShowOrderOptionsToEdit();
 
                 _orderChoice.FinalizeEntree();
-
             }
         }
     }

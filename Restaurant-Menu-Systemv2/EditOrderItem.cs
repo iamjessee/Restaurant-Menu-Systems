@@ -1,11 +1,4 @@
-﻿using Restaurant_Menu_System_V3;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Restaurant_Menu_System_V3
+﻿namespace Restaurant_Menu_System_V3
 {
     public class EditOrderItem
     {
@@ -62,18 +55,23 @@ namespace Restaurant_Menu_System_V3
                         _orderChoice.ClearEntreeChoice();
                         _orderChoice.ClearTortillaChoice();
                         break;
+
                     case 1:
                         _orderChoice.ClearTortillaChoice();
                         break;
+
                     case 2:
                         _orderChoice.ClearProteinChoice();
                         break;
+
                     case 3:
                         _orderChoice.ClearRiceChoice();
                         break;
+
                     case 4:
                         _orderChoice.ClearBeanChoice();
                         break;
+
                     case 5:
                         _orderChoice.ClearAddonChoices();
                         break;

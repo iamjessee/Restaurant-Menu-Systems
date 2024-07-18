@@ -1,9 +1,8 @@
 ﻿using Restaurant_Menu_System_V3;
-using System.ComponentModel.DataAnnotations;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         // calls class and methods for greeting user and collecting name for order
         OrderName customerName = new OrderName();
