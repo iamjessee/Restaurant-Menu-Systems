@@ -33,13 +33,10 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
         string description = $"\n--- Entrée {itemCount} ---";
         foreach (MenuOption item in entreeChoices)
         {
-            if (item.Price == 0.00m)
+            description += $"\n{item.ItemName.ToUpper()}";
+            if (item.Price != 0.00m)
             {
-                description += $"\n{item.ItemName.ToUpper()}";
-            }
-            else
-            {
-                description += $"\n{item.ItemName.ToUpper() + "...." + item.Price.ToString("c")}";
+                description += "...." + item.Price.ToString("c");
             }
         }
         return description;
