@@ -74,7 +74,7 @@
             while (true)
             {
                 Console.WriteLine($"{question}(Y/N)");
-                string userResponse = Console.ReadLine();
+                string userResponse = Console.ReadLine() ?? string.Empty;
 
                 if (userResponse.Equals("Y", StringComparison.OrdinalIgnoreCase))
                 {
