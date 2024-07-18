@@ -39,10 +39,25 @@ internal static partial class OrderHelper
             }
             else
             {
-                WriteLine($"{itemCount}. {item.ItemName.ToUpper()}....{item.Price.ToString("c")}");
+                WriteLine($"{itemCount}. {item.ItemName.ToUpper()}.... {item.Price:c}");
             }
             itemCount++;
         }
+    }
+
+    //creates a readable description for a list of entrée choices
+    public static string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
+    {
+        string description = $"\n--- Entrée {itemCount} ---";
+        foreach (MenuOption item in entreeChoices)
+        {
+            description += $"\n{item.ItemName.ToUpper()}";
+            if (item.Price != 0.00m)
+            {
+                description += $".... {item.Price:c}";
+            }
+        }
+        return description;
     }
 
     // asks a yes/no question and returns the user's response as a boolean

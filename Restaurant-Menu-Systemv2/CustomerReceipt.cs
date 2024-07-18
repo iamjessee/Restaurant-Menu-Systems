@@ -25,21 +25,6 @@ public class CustomerReceipt(OrderInputAndOptions orderChoice)
         return orderDescription;
     }
 
-    //creates a readable description for a list of entrée choices
-    public static string GetEntreeDescription(List<MenuOption> entreeChoices, int itemCount)
-    {
-        string description = $"\n--- Entrée {itemCount} ---";
-        foreach (MenuOption item in entreeChoices)
-        {
-            description += $"\n{item.ItemName.ToUpper()}";
-            if (item.Price != 0.00m)
-            {
-                description += "...." + item.Price.ToString("c");
-            }
-        }
-        return description;
-    }
-
     // adds together total tax and price of selected items to show user their total price
     public decimal CalculateSubTotal()
     {
