@@ -1,6 +1,4 @@
-﻿using Restaurant_Menu_System_V3.Model;
-
-namespace Restaurant_Menu_System_V3;
+﻿namespace Restaurant_Menu_System_V3;
 
 public class CustomerReceipt(OrderInputAndOptions orderChoice)
 {

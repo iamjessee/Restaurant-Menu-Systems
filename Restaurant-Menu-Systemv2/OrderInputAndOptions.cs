@@ -20,11 +20,10 @@ public class OrderInputAndOptions
     // adds all entrée choices to new list and clears current list
     public void FinalizeEntree()
     {
-        if (CurrentEntreeChoices.Count != 0)
-        {
-            AllEntreeChoices.Add(new List<MenuOption>(CurrentEntreeChoices));
-            CurrentEntreeChoices.Clear();
-        }
+        if (CurrentEntreeChoices.Count == 0) return;
+
+        AllEntreeChoices.Add(new List<MenuOption>(CurrentEntreeChoices));
+        CurrentEntreeChoices.Clear();
     }
 
     //set the CustomerReceipt instance enabling rolling total calculation
