@@ -37,11 +37,11 @@ public class EditOrderItem(OrderInputAndOptions orderChoice)
             new MenuOption() { ItemName = "Edit Add-On Choices" },
         ];
 
-        OrderInputAndOptions.DisplayOrderOptions("CHOOSE WHICH MENU ITEM YOU WOULD LIKE TO EDIT:", options);
+        DisplayOrderOptions("CHOOSE WHICH MENU ITEM YOU WOULD LIKE TO EDIT:", options);
 
         do
         {
-            int choice = OrderInputAndOptions.GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
+            int choice = GetIntegerInput("Enter the number for what you would like to edit. ", 1, orderOptions.Length) - 1;
 
             // Clear previous selection based on the choice
             switch (choice)
@@ -74,6 +74,6 @@ public class EditOrderItem(OrderInputAndOptions orderChoice)
 
             orderOptions[choice]();
         }
-        while (OrderInputAndOptions.GetYesNoResponse("Would you like to make another edit?"));
+        while (GetYesNoResponse("Would you like to make another edit?"));
     }
 }
