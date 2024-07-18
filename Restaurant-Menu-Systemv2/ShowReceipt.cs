@@ -1,24 +1,12 @@
 ﻿namespace Restaurant_Menu_System_V3;
 
-public class CustomerReceipt
+public class CustomerReceipt(OrderInputAndOptions orderChoice)
 {
     // calling field from another class to get items selected by user
-    private OrderInputAndOptions _orderChoice;
-
-    // private field to generate a random number to attach to order
-    private Random _rnd = new Random();
-
-    // Constructor to initialize the orderChoice instance
-    public CustomerReceipt(OrderInputAndOptions orderchoice)
-    {
-        _orderChoice = orderchoice;
-    }
+    private readonly OrderInputAndOptions _orderChoice = orderChoice;
 
     // generate order number
-    public int GenerateOrderID()
-    {
-        return _rnd.Next(1, 100);
-    }
+    public int GenerateOrderID() => Random.Shared.Next(1, 100);
 
     // gets complete order selected by user and displays it in a readable itemized format for user
     public string GetOrderDescription()
