@@ -9,7 +9,7 @@ public class EditOrderItem(OrderInputAndOptions orderChoice)
     // displays options for user to edit and takes them back to their spot in the menu
     public void ShowOrderOptionsToEdit()
     {
-        if (!OrderInputAndOptions.GetYesNoResponse("Would you like to edit your order?"))
+        if (!GetYesNoResponse("Would you like to edit your order?"))
         {
             Console.WriteLine("No changes made to the order.");
             return;

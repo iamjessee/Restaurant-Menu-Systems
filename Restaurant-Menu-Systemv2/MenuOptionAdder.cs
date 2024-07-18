@@ -11,7 +11,7 @@ public class MenuOptionAdder(OrderInputAndOptions orderChoice, EditOrderItem edi
     // prompts user to add more entrées to their order
     public void AddMoreEntrees()
     {
-        while (OrderInputAndOptions.GetYesNoResponse("Would you like to add another item to your order?"))
+        while (GetYesNoResponse("Would you like to add another item to your order?"))
         {
             _orderChoice.StartNewBurrito();
 

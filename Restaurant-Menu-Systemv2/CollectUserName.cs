@@ -1,8 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿namespace Restaurant_Menu_System_V3;
 
-namespace Restaurant_Menu_System_V3;
-
-public partial class OrderName
+public class OrderName
 {
     // Property to get and set the name
     public string? Name { get; private set; }
@@ -26,10 +24,4 @@ public partial class OrderName
             }
         }
     }
-
-    // Validates the user's name to ensure it contains only alphabetical characters and spaces, and is between 1 and 26 characters long
-    public static bool IsValidName(string? name) => name != null && MyRegex().IsMatch(name);
-
-    [GeneratedRegex(@"^[a-zA-Z\s]{1,26}$")]
-    private static partial Regex MyRegex();
 }
