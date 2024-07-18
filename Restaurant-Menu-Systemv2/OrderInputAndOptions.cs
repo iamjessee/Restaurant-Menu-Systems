@@ -84,10 +84,7 @@
                 {
                     return false;
                 }
-                else
-                {
-                    Console.WriteLine("Please enter Y/N to continue.");
-                }
+                Console.WriteLine("Please enter Y/N to continue.");
             }
         }
 
