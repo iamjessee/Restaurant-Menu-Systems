@@ -1,12 +1,10 @@
 ﻿using Restaurant_Menu_System_V3;
-using System.ComponentModel.DataAnnotations;
-
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
         // calls class and methods for greeting user and collecting name for order
-        OrderName customerName = new OrderName();
+        CollectUserName customerName = new CollectUserName();
         customerName.GreetAndCollectName();
 
         // create an instance of OrderInputAndOptions and CustomerReceipt

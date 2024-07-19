@@ -1,45 +1,37 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Restaurant_Menu_System_V3
+namespace Restaurant_Menu_System_V3;
+
+public class CollectUserName
 {
-    public class OrderName
+    private string _name;
+
+    // property to get and set the name
+    public string Name { get; private set; } = string.Empty;
+
+    // greets the user and prompts them to enter a name for the order
+    public void GreetAndCollectName()
     {
-        private string _name;
+        Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
 
-        // Property to get and set the name
-        public string Name
-        {
-            get { return _name; }
-            private set { _name = value; }
-        }
+            Console.WriteLine("Please enter a name for this order: ");
+            string input = Console.ReadLine();
 
-        // Greets the user and prompts them to enter a name for the order
-        public void GreetAndCollectName()
-        {
-            Console.WriteLine("Hello, Welcome to Bullard's Bussin' Burritos.");
-
-            while (true)
+            if (IsValidName(input))
             {
-                Console.WriteLine("Please enter a name for this order: ");
-                string input = Console.ReadLine();
-
-                if (IsValidName(input))
-                {
-                    _name = input;
-                    Console.WriteLine($"Welcome {_name} Please use the numbers provided when making a selection.");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Enter a name using only alphabetical characters and less than 26 characters");
-                }
+                Name = input;
+                Console.WriteLine($"Welcome {Name}, please use the numbers provided when making a selection.");
             }
-        }
+            else
+            {
+                Console.WriteLine("Enter a name using only alphabetical characters and less than 26 characters");
+            }
+        
+    }
 
-        // Validates the user's name to ensure it contains only alphabetical characters and spaces, and is between 1 and 26 characters long
-        public bool IsValidName(string name)
-        {
-            return Regex.IsMatch(name, @"^[a-zA-Z\s]{1,26}$");
-        }
+    // validates the user's name to ensure it contains only alphabetical characters and spaces, and is between 1 and 26 characters long
+    public bool IsValidName(string name)
+    {
+        return Regex.IsMatch(name, @"^[a-zA-Z\s]{1,26}$");
     }
 }
