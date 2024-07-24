@@ -85,24 +85,13 @@ public class OrderInputAndOptions
     // asks a yes/no question and returns the user's response as a boolean
     public bool GetYesNoResponse(string question)
     {
-        do
+        string userResponse = " ";
+        while (userResponse != "Y" && userResponse != "N")
         {
             Console.WriteLine($"{question}(Y/N)");
-            string userResponse = Console.ReadLine().ToUpper();
-
-            if (userResponse == "Y")
-            {
-                return true;
-            }
-            else if (userResponse == "N")
-            {
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("Please enter Y/N to continue.");
-            }
-        } while (true);
+            userResponse = Console.ReadLine().ToUpper();
+        }
+        return userResponse == "Y";
     }
 
     // prompts user to pick their main entrée choice
