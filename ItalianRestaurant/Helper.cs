@@ -42,14 +42,24 @@ namespace ItalianRestaurant
         }
 
         // gets selected menu options and displays in shopping cart
-        public void DisplayOptions(string orderType, List<MenuOptions> options)
+        public void DisplayOptions(List<MenuOptions> options)
         {
-            Console.WriteLine($"\n{orderType}");
             for (int i = 0; i < options.Count; i++)
             {
                 var item = options[i];
                 string description = item.Price == 0.00m ? "" : $"....{item.Price:c}";
                 Console.WriteLine($"{item.ItemName.ToUpper()}{description}");
+            }
+        }
+
+        // gets selected menu options and displays with numbers for selecting to edit
+        public void DisplayOptionsWithNumbers(List<MenuOptions> options)
+        {
+            for (int i = 0; i < options.Count; i++)
+            {
+                var item = options[i];
+                string description = item.Price == 0.00m ? "" : $"....{item.Price:c}";
+                Console.WriteLine($"{i + 1}. {item.ItemName.ToUpper()}{description}");
             }
         }
     }
