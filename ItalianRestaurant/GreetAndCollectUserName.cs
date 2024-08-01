@@ -4,9 +4,14 @@ namespace ItalianRestaurant
 {
     public class GreetAndCollectUserName
     {
+        /// <summary>
+        /// gets the user's name
+        /// </summary>
         public string UserName { get; private set; }
 
-        // greet user and collect a name for order
+        /// <summary>
+        /// greets the user and collects a name for the order
+        /// </summary>
         public void GreetAndCollectName()
         {
             Console.WriteLine("Hello, Welcome to Pasta Palooza.");
@@ -26,7 +31,12 @@ namespace ItalianRestaurant
 
         }
 
-        // validates the user's name to ensure it contains only alphabetical characters and spaces, and is between 1 and 26 characters long
+        /// <summary>
+        /// validates the username to only include letters and spaces 
+        /// as well as the name is between 1 and 26 characters long
+        /// </summary>
+        /// <param name="name">the name to validate</param>
+        /// <returns>true if name is valid, otherwise false</returns>
         public bool IsValidName(string name)
         {
             return Regex.IsMatch(name, @"^[a-zA-Z\s]{1,26}$");

@@ -5,19 +5,28 @@ namespace ItalianRestaurant
 {
     public class Helper
     {
-        // collects user input and verifies it is valid and within the provided range
-        public int GetIntegerInput(string message, int minValue, int maxValue)
+        /// <summary>
+        /// collects user input and verifies it is valid and within the provided range
+        /// </summary>
+        /// <param name="message">message to show user what they are selecting</param>
+        /// <param name="maxValue">max total choices available</param>
+        /// <returns></returns>
+        public int GetIntegerInput(string message, int maxValue)
         {
             int input;
             Console.Write(message);
-            while (!int.TryParse(Console.ReadLine(), out input) || input < minValue || input > maxValue)
+            while (!int.TryParse(Console.ReadLine(), out input) || input < 1 || input > maxValue)
             {
-                Console.WriteLine($"Please enter a valid number between {minValue} and {maxValue}.");
+                Console.WriteLine($"Please enter a valid number between {1} and {maxValue}.");
             }
             return input;
         }
 
-        // asks a yes/no question and returns the user's response as a boolean
+        /// <summary>
+        /// asks a yes/no question and returns the user's response as a boolean
+        /// </summary>
+        /// <param name="question">question to prompt user</param>
+        /// <returns></returns>
         public bool GetYetNoResponce(string question)
         {
             string userResponse = " ";
@@ -29,7 +38,11 @@ namespace ItalianRestaurant
             return userResponse == "Y";
         }
 
-        // gets menu options and displays them to use for selection
+        /// <summary>
+        /// gets menu options and displays them to use for selection
+        /// </summary>
+        /// <param name="orderType">menu choice user is selecting</param>
+        /// <param name="options">menu options available to select</param>
         public void DisplayOptions(string orderType, MenuOptions[] options)
         {
             Console.WriteLine($"\n{orderType}");
@@ -41,7 +54,10 @@ namespace ItalianRestaurant
             }
         }
 
-        // gets selected menu options and displays in shopping cart
+        /// <summary>
+        /// gets selected menu options and displays in shopping cart
+        /// </summary>
+        /// <param name="options">selected items in cart</param>
         public void DisplayOptions(List<MenuOptions> options)
         {
             for (int i = 0; i < options.Count; i++)
@@ -52,7 +68,10 @@ namespace ItalianRestaurant
             }
         }
 
-        // gets selected menu options and displays with numbers for selecting to edit
+        /// <summary>
+        /// gets selected menu options and displays with numbers for selecting to edit
+        /// </summary>
+        /// <param name="options">selected items in cart</param>
         public void DisplayOptionsWithNumbers(List<MenuOptions> options)
         {
             for (int i = 0; i < options.Count; i++)

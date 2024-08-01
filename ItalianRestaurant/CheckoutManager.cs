@@ -15,6 +15,11 @@ namespace ItalianRestaurant
         private ShoppingCart _shoppingCart;
         private Helper _helper;
 
+        /// <summary>
+        /// initializes a new instance of the <see cref="CheckoutManager"/> class.
+        /// </summary>
+        /// <param name="shoppingCart">the shopping cart containing selected menu items.</param>
+        /// <param name="greetAndCollectUserName">the instance used for greeting and collecting the username.</param>
         public CheckoutManager(ShoppingCart shoppingCart, GreetAndCollectUserName greetAndCollectUserName)
         {
             _shoppingCart = shoppingCart;
@@ -22,24 +27,40 @@ namespace ItalianRestaurant
             _greetAndCollectUserName = greetAndCollectUserName;
         }
 
-        // generate order number
+        /// <summary>
+        /// generate order number
+        /// </summary>
+        /// <returns>a randomly generated order ID</returns>
         public int GenerateOrderID()
         {
             return _rnd.Next(1, 100);
         }
 
-        // calculates total tax paid on total price of items selected by user
+        /// <summary>
+        /// calculates total tax paid on total price of items selected by user
+        /// </summary>
+        /// <param name="subTotal">the subtotal of the selected items</param>
+        /// <returns>the calculated tax amount</returns>
         public decimal CalculateTax(decimal subTotal)
         {
             decimal taxRate = 0.0815m;
             return Math.Round(subTotal * taxRate, 2);
         }
 
-        // calculate final total price for customer based on selected items and tax rate
+        /// <summary>
+        /// calculates the final total price for the customer based on the subtotal and tax.
+        /// </summary>
+        /// <param name="subTotal">the subtotal of the selected items.</param>
+        /// <param name="tax">the calculated tax amount.</param>
+        /// <returns>the final total price.</returns>
         public decimal CalculateTotal(decimal subTotal, decimal tax)
         {
             return subTotal + tax;
         }
+
+        /// <summary>
+        /// displays itemized receipt for user 
+        /// </summary>
         public void DisplayReceipt()
         {
             int orderId = GenerateOrderID();

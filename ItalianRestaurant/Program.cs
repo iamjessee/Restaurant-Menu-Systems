@@ -7,9 +7,16 @@ class Program
 {
     static void Main()
     {
+        // create an instance to greet user
         GreetAndCollectUserName greetAndCollectUserName = new();
+
+        //create an instance of OrderManager with the instance of GreetAndCollectUserName
         OrderManager orderManager = new(greetAndCollectUserName);
+
+        // greet and collect the username for the order
         greetAndCollectUserName.GreetAndCollectName();
+
+        // start the order process
         orderManager.StartOrderProcess();
     }
 }

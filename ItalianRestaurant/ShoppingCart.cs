@@ -12,6 +12,10 @@ namespace ItalianRestaurant
         private Helper _helper;
         private OrderManager _orderManager;
 
+        /// <summary>
+        ///  initializes a new instance of the <see cref='ShoppingCart'/> class
+        /// </summary>
+        /// <param name="orderManager"></param>
         public ShoppingCart(OrderManager orderManager)
         {
             _menuOptions = new List<MenuOptions>();
@@ -19,13 +23,18 @@ namespace ItalianRestaurant
             _orderManager = orderManager;
         }
 
-        //checks if shopping cart is empty
+        /// <summary>
+        /// checks if shopping cart is empty
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty()
         {
             return _menuOptions.Count == 0;
         }
 
-        // prompts user to edit or clear shopping cart, also lets user choose to go back to menu
+        /// <summary>
+        /// prompts user to edit or clear shopping cart, also lets user choose to go back to menu
+        /// </summary>
         public void EditShoppingCart()
         {
             bool continueEditing = true;
@@ -48,7 +57,7 @@ namespace ItalianRestaurant
             };
 
                 _helper.DisplayOptions("Edit Options:", cartOptions);
-                int choice = _helper.GetIntegerInput("Enter your choice: ", 1, cartOptions.Length);
+                int choice = _helper.GetIntegerInput("Enter your choice: ", cartOptions.Length);
 
                 switch (choice)
                 {
@@ -71,35 +80,47 @@ namespace ItalianRestaurant
             }
         }
 
-        // add selected menu option item to shopping cart
+        /// <summary>
+        /// add selected menu option item to shopping cart
+        /// </summary>
+        /// <param name="menuOptions">option selected by user</param>
         public void AddSelectedMenuOption(MenuOptions menuOptions)
         {
             _menuOptions.Add(menuOptions);
         }
 
-        // removes item selected from cart
+        /// <summary>
+        /// removes item selected from cart
+        /// </summary>
         public void RemoveSelectedMenuOption()
         {
             Console.WriteLine("Please select what you would like to edit: \n");
             _helper.DisplayOptionsWithNumbers(_menuOptions);
-            int selection = _helper.GetIntegerInput("Enter the number of the item you want to remove: ", 1, _menuOptions.Count) - 1;
+            int selection = _helper.GetIntegerInput("Enter the number of the item you want to remove: ", _menuOptions.Count) - 1;
             Console.WriteLine($"Removed {_menuOptions[selection].ItemName} from the cart.");
             _menuOptions.RemoveAt(selection);
         }
 
-        // clears whole shopping cart
+        /// <summary>
+        /// clears whole shopping cart
+        /// </summary>
         public void ClearShoppingCart()
         {
             _menuOptions.Clear();
         }
 
-        // displays items in cart
+        /// <summary>
+        /// displays items in cart
+        /// </summary>
         public void DisplayShoppingCart()
         {
             _helper.DisplayOptions(_menuOptions);
         }
 
-        // calculates subtotal of items in cart
+        /// <summary>
+        /// calculates subtotal of items in cart
+        /// </summary>
+        /// <returns></returns>
         public decimal CalculateSubTotal()
         {
             decimal Subtotal = 0;

@@ -8,35 +8,16 @@ namespace ItalianRestaurant
 {
     public class OrderManager
     {
-        /// <summary>
-        /// provides utility methods for user input and display.
-        /// </summary>
         private Helper _helper;
-
-        /// <summary>
-        /// manages user greeting and name collection.
-        /// </summary>
         private GreetAndCollectUserName _greetAndCollectUserName;
-
-        /// <summary>
-        /// manages the shopping cart functionality.
-        /// </summary>
         private ShoppingCart _shoppingCart;
-
-        /// <summary>
-        /// manages the menu display and selection.
-        /// </summary>
         private MenuManager _menuManager;
-
-        /// <summary>
-        /// manages the checkout process
-        /// </summary>
         private CheckoutManager _checkoutManager;
 
         /// <summary>
-        /// initializes a new instance of the OrderManager class.
+        /// initializes a new instance of the  <see cref="OrderManager"/>  class.
         /// </summary>
-        /// <param name="greetAndCollectUserName"></param>
+        /// <param name="greetAndCollectUserName">the instance used for greeting and collecting the username</param>
         public OrderManager(GreetAndCollectUserName greetAndCollectUserName)
         {
             // initialize helper class
@@ -55,7 +36,9 @@ namespace ItalianRestaurant
             _checkoutManager = new CheckoutManager(_shoppingCart, _greetAndCollectUserName);
         }
 
-        // method to handle the whole order end editing process
+        /// <summary>
+        /// method to handle the whole order end editing process
+        /// </summary>
         public void StartOrderProcess()
         {
             bool continueOrdering = true;
