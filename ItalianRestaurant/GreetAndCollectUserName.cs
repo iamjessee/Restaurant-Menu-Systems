@@ -18,17 +18,19 @@ namespace ItalianRestaurant
 
             Console.WriteLine("Please enter a name for this order: ");
             string input = Console.ReadLine();
-
-            if (IsValidName(input))
+            while (true)
             {
-                UserName = input;
-                Console.WriteLine($"Welcome {UserName}, please use the numbers provided when making a selection.");
+                if (IsValidName(input))
+                {
+                    UserName = input;
+                    Console.WriteLine($"Welcome {UserName}, please use the numbers provided when making a selection.");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Enter a name using only alphabetical characters and less than 26 characters");
+                }
             }
-            else
-            {
-                Console.WriteLine("Enter a name using only alphabetical characters and less than 26 characters");
-            }
-
         }
 
         /// <summary>
